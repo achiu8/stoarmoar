@@ -12,6 +12,13 @@ import './App.css';
 const { Header, Content, Footer } = Layout;
 
 class App extends Component {
+  state = {
+    loggedIn: false
+  };
+
+  handleLogin = () =>
+    this.setState({ loggedIn: true });
+
   render() {
     return (
       <Router>
@@ -20,8 +27,8 @@ class App extends Component {
             Atlas
           </Header>
           <Content className="App-content">
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
+            <Route exact path="/" render={props => <Home loggedIn={this.state.loggedIn} />} />
+            <Route path="/login" render={props => <Login {...props} onLogin={this.handleLogin}/>} />
             <Route path="/create" component={Create} />
           </Content>
           <Footer>

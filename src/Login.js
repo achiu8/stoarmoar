@@ -6,7 +6,13 @@ import './Login.css';
 
 const FormItem = Form.Item;
 
-const Login = ({ form: { getFieldDecorator } }) => (
+const handleClick = (history, onLogin) => e => {
+  e.preventDefault();
+  onLogin();
+  history.push('/');
+};
+
+const Login = ({ form: { getFieldDecorator }, history, onLogin }) => (
   <Form className="Login-form">
     <FormItem>
       {getFieldDecorator('username', {
@@ -30,7 +36,12 @@ const Login = ({ form: { getFieldDecorator } }) => (
         <Checkbox>Remember me</Checkbox>
       )}
       <a href="" className="Login-form-forgot">Forgot password</a>
-      <Button type="primary" htmlType="submit" className="Login-form-button">
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="Login-form-button"
+        onClick={handleClick(history, onLogin)}
+      >
         Log in
       </Button>
       Don't have an account? <Link to="/create">Create one now</Link>
