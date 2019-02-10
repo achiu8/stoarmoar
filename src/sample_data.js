@@ -12,3 +12,5 @@ const fileTypes = [
 ];
 
 export const files = Array.from({ length: 50 }, () => sample(fileTypes));
+
+export const accounts = ['google', 'dropbox'];
