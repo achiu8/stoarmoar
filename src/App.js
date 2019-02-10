@@ -26,11 +26,11 @@ class App extends Component {
           <Header>
             Atlas
           </Header>
-          <Content className="App-content">
+          <Layout>
             <Route exact path="/" render={props => <Home loggedIn={this.state.loggedIn} />} />
             <Route path="/login" render={props => <Login {...props} onLogin={this.handleLogin}/>} />
             <Route path="/create" component={Create} />
-          </Content>
+          </Layout>
           <Footer>
             2018
           </Footer>
