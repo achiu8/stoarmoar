@@ -1,0 +1,12 @@
+.grid-row {
+  margin-bottom: 25px;
+}
+
+.grid-item {
+  text-align: center;
+}
+
+.grid-item-icon {
+  margin-bottom: 5px;
+  font-size: 50px;
+}
