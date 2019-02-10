@@ -9,7 +9,7 @@ import Home from './Home';
 import 'antd/dist/antd.css';
 import './App.css';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Footer } = Layout;
 
 class App extends Component {
   state = {

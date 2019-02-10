@@ -1,0 +1,15 @@
+.Files {
+  padding: 25px;
+}
+
+.Files-row {
+  margin-bottom: 25px;
+}
+
+.Files-file {
+  text-align: center;
+}
+
+.Files-file-icon {
+  font-size: 50px;
+}
