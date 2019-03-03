@@ -10,8 +10,15 @@ import './Home.css';
 
 export default class Home extends Component {
   state = {
-    modalOpen: false
+    modalOpen: false,
+    files: []
   };
+
+  componentDidMount() {
+    fetch('/google/files')
+      .then(res => res.json())
+      .then(({ files }) => this.setState({ files }));
+  }
 
   handleModal = modalOpen => () =>
     this.setState({ modalOpen });
@@ -22,7 +29,7 @@ export default class Home extends Component {
       : (
         <Layout>
           <Accounts onAddAccountClick={this.handleModal(true)} />
-          <Files />
+          <Files files={this.state.files} />
           <AddAccount
             visible={this.state.modalOpen}
             onCancel={this.handleModal(false)}
