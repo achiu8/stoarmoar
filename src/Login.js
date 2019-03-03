@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Layout } from 'antd';
 
+import SocialAuth from './SocialAuth';
+
 import './Login.css';
 
 const FormItem = Form.Item;
@@ -48,6 +50,7 @@ const Login = ({ form: { getFieldDecorator }, history, onLogin }) => (
         Don't have an account? <Link to="/create">Create one now</Link>
       </FormItem>
     </Form>
+    <SocialAuth />
   </Layout>
 );
 

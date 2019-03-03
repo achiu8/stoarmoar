@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import Login from './Login';
 import Create from './Create';
 import Home from './Home';
+import GoogleAuth from './GoogleAuth';
 
 import 'antd/dist/antd.css';
 import './App.css';
@@ -20,6 +21,8 @@ class App extends Component {
     this.setState({ loggedIn: true });
 
   render() {
+    const { loggedIn } = this.state;
+
     return (
       <Router>
         <Layout>
@@ -27,9 +30,19 @@ class App extends Component {
             Atlas
           </Header>
           <Layout>
-            <Route exact path="/" render={props => <Home loggedIn={this.state.loggedIn} />} />
-            <Route path="/login" render={props => <Login {...props} onLogin={this.handleLogin}/>} />
+            <Route exact path="/" render={props => <Home loggedIn={loggedIn} />} />
+            <Route path="/login" render={props => <Login {...props} onLogin={this.handleLogin} />} />
             <Route path="/create" component={Create} />
+            <Route
+              path="/google-auth"
+              render={props => (
+                <GoogleAuth
+                  {...props}
+                  loggedIn={loggedIn}
+                  onLogin={this.handleLogin}
+                />
+              )}
+            />
           </Layout>
           <Footer>
             2018
