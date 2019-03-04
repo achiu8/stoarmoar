@@ -38,7 +38,7 @@ const Login = ({ form: { getFieldDecorator }, history, onLogin }) => (
         })(
           <Checkbox>Remember me</Checkbox>
         )}
-        <a href="" className="Login-form-forgot">Forgot password</a>
+        <a href="/" className="Login-form-forgot">Forgot password</a>
         <Button
           type="primary"
           htmlType="submit"
