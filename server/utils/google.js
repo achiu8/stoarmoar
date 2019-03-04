@@ -8,25 +8,23 @@ const SCOPES = [
   'https://www.googleapis.com/auth/drive.metadata.readonly'
 ];
 
-const CREDENTIALS_PATH = path.resolve(__dirname, '../credentials.json');
 const TOKEN_PATH = path.resolve(__dirname, '../token.json');
 
 const authClient = () =>
-  fs.readFileAsync(CREDENTIALS_PATH)
-    .then(JSON.parse)
-    .then(({ clientId, clientSecret, redirect }) => new google.auth.OAuth2(clientId, clientSecret, redirect))
-    .catch(err => console.log('Error loading secrets file:', err));
+  new google.auth.OAuth2(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    process.env.REDIRECT
+  );
 
 const authUrl = () =>
-  authClient()
-    .then(client => client.generateAuthUrl({
-      access_type: 'offline',
-      scope: SCOPES
-    }));
+  authClient().generateAuthUrl({
+    access_type: 'offline',
+    scope: SCOPES
+  });
 
 const saveToken = code =>
-  authClient()
-    .then(client => client.getToken(code))
+  authClient().getToken(code)
     .then(token => fs.writeFileAsync(TOKEN_PATH, JSON.stringify(token)))
     .catch(err => console.log('Error saving token:', err));
 
@@ -36,8 +34,9 @@ const loadToken = () =>
     .catch(err => console.log('Error loading token:', err));
 
 const listFiles = () =>
-  Promise.all([authClient(), loadToken()])
-    .then(([auth, token]) => {
+  loadToken()
+    .then(token => {
+      const auth = authClient();
       auth.setCredentials(token);
 
       return google.drive({ version: 'v3', auth }).files.list({

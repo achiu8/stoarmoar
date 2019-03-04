@@ -9,11 +9,12 @@ router.get('/auth', (req, res) => {
 });
 
 router.get('/auth-url', (req, res) => {
-  authUrl().then(url => res.send({ url }));
+  res.send({ url: authUrl() });
 });
 
 router.get('/files', (req, res) => {
-  listFiles().then(files => res.send({ files }));
+  listFiles()
+    .then(files => res.send({ files }));
 });
 
 module.exports = router;
