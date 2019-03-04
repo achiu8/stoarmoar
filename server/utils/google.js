@@ -41,8 +41,7 @@ const listFiles = () =>
       auth.setCredentials(token);
 
       return google.drive({ version: 'v3', auth }).files.list({
-        pageSize: 10,
-        fields: 'nextPageToken, files(id, name)'
+        fields: 'nextPageToken, files(id, name, mimeType, description)'
       })
     })
     .then(({ data }) => data.files)

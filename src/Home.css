@@ -7,6 +7,7 @@
 }
 
 .grid-item-icon {
+  display: block !important;
   margin-bottom: 5px;
   font-size: 50px;
 }

@@ -10,3 +10,17 @@ export const chunksOf = (n, xs) =>
 
 export const sample = xs =>
   xs[Math.floor(Math.random() * xs.length)];
+
+export const iconForType = type => ({
+  'application/vnd.google-apps.folder': 'folder',
+  'application/vnd.google-apps.document': 'file-word',
+  'application/vnd.google-apps.spreadsheet': 'file-excel',
+  'application/vnd.google-apps.presentation': 'file-ppt',
+  'application/pdf': 'file-pdf',
+  'image/jpeg': 'file-jpg',
+  'image/png': 'file-jpg',
+  'text/csv': 'file-text',
+})[type] || 'file';
+
+export const filename = (name, length = 15) =>
+  name.length <= length ? name : name.slice(0, length) + '...';
