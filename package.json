@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3001",
   "devDependencies": {
     "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10",
     "react-scripts": "2.1.5"
   },
   "dependencies": {
@@ -20,7 +21,7 @@
   },
   "scripts": {
     "start": "concurrently \"npm run client\" \"npm run server\"",
-    "server": "nodemon server/server.js",
+    "server": "./node_modules/nodemon/bin/nodemon.js server/server.js",
     "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
