@@ -5,7 +5,7 @@ import qs from 'qs';
 class DropboxAuth extends Component {
   componentDidMount() {
     const { location, onLogin } = this.props;
-    const { access_token } = qs.parse(location.search, { ignoreQueryPrefix: true });
+    const { access_token } = qs.parse(location.hash.slice(1));
 
     fetch(`/dropbox/auth?access_token=${access_token}`).then(onLogin);
   }
