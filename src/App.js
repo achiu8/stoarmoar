@@ -6,6 +6,7 @@ import Login from './Login';
 import Create from './Create';
 import Home from './Home';
 import GoogleAuth from './GoogleAuth';
+import DropboxAuth from './DropboxAuth';
 
 import 'antd/dist/antd.css';
 import './App.css';
@@ -37,6 +38,16 @@ class App extends Component {
               path="/google-auth"
               render={props => (
                 <GoogleAuth
+                  {...props}
+                  loggedIn={loggedIn}
+                  onLogin={this.handleLogin}
+                />
+              )}
+            />
+            <Route
+              path="/dropbox-auth"
+              render={props => (
+                <DropboxAuth
                   {...props}
                   loggedIn={loggedIn}
                   onLogin={this.handleLogin}

@@ -1,20 +1,19 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const path = require('path');
-const readline = require('readline');
 const { google } = require('googleapis');
 
 const SCOPES = [
   'https://www.googleapis.com/auth/drive.metadata.readonly'
 ];
 
-const TOKEN_PATH = path.resolve(__dirname, '../token.json');
+const TOKEN_PATH = path.resolve(__dirname, '../google_token.json');
 
 const authClient = () =>
   new google.auth.OAuth2(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    process.env.REDIRECT
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.GOOGLE_REDIRECT
   );
 
 const authUrl = () =>
