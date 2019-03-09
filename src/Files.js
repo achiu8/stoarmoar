@@ -13,18 +13,21 @@ export default ({ files }) => (
   <Layout className="Files">
     <Content>
       <h1>My Files</h1>
-      {chunksOf(COLUMNS, files).map((row, i) => (
-        <Row key={i} className="grid-row" gutter={48}>
-          {row.map(({ name, mimeType }, j) => (
-            <Col key={j} span={24 / COLUMNS}>
-              <div className="grid-item">
-                <Icon className="grid-item-icon" type={iconForType(mimeType)} />
-                <span>{filename(name)}</span>
-              </div>
-            </Col>
-          ))}
-        </Row>
-      ))}
+      {!files.length
+        ? <p>Select account type to view files.</p>
+        : chunksOf(COLUMNS, files).map((row, i) => (
+            <Row key={i} className="grid-row" gutter={48}>
+              {row.map(({ name, mimeType }, j) => (
+                <Col key={j} span={24 / COLUMNS}>
+                  <div className="grid-item">
+                    <Icon className="grid-item-icon" type={iconForType(mimeType)} />
+                    <span>{filename(name)}</span>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          ))
+      }
     </Content>
   </Layout>
 );

@@ -8,27 +8,32 @@ import Files from './Files';
 
 import './Home.css';
 
+import { accounts } from './sample_data';
+
 export default class Home extends Component {
   state = {
     modalOpen: false,
     files: []
   };
 
-  componentDidMount() {
-    fetch('/google/files')
-      .then(res => res.json())
-      .then(({ files }) => this.setState({ files }));
-  }
-
   handleModal = modalOpen => () =>
     this.setState({ modalOpen });
+
+  handleFetch = id => () =>
+    fetch(`/${id}/files`)
+      .then(res => res.json())
+      .then(({ files }) => this.setState({ files }));
 
   render() {
     return !this.props.loggedIn
       ? <Redirect to="/login" />
       : (
         <Layout>
-          <Accounts onAddAccountClick={this.handleModal(true)} />
+          <Accounts
+            accounts={accounts}
+            onAddAccountClick={this.handleModal(true)}
+            onFetch={this.handleFetch}
+          />
           <Files files={this.state.files} />
           <AddAccount
             visible={this.state.modalOpen}
