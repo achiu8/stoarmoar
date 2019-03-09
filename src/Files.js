@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Icon, Layout, Row } from 'antd';
 
-import { chunksOf, iconForType, filename } from './utils';
+import { chunksOf, filename } from './utils';
 
 import './Files.css';
 
@@ -17,10 +17,10 @@ export default ({ files }) => (
         ? <p>Select account type to view files.</p>
         : chunksOf(COLUMNS, files).map((row, i) => (
             <Row key={i} className="grid-row" gutter={48}>
-              {row.map(({ name, mimeType }, j) => (
+              {row.map(({ name, type }, j) => (
                 <Col key={j} span={24 / COLUMNS}>
                   <div className="grid-item">
-                    <Icon className="grid-item-icon" type={iconForType(mimeType)} />
+                    <Icon className="grid-item-icon" type={type} />
                     <span>{filename(name)}</span>
                   </div>
                 </Col>

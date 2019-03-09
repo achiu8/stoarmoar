@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import Accounts from './Accounts';
 import AddAccount from './AddAccount';
 import Files from './Files';
+import { filesForAccount } from './utils';
 
 import './Home.css';
 
@@ -22,7 +23,10 @@ export default class Home extends Component {
   handleFetch = id => () =>
     fetch(`/${id}/files`)
       .then(res => res.json())
-      .then(({ files }) => this.setState({ files }));
+      .then(this.handleFiles(id));
+
+  handleFiles = id => ({ files }) =>
+    this.setState({ files: filesForAccount(id)(files) });
 
   render() {
     return !this.props.loggedIn
