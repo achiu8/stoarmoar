@@ -2,9 +2,9 @@ const fs = require('fs');
 
 module.exports = {
   "development": {
-    "username": "dbuser",
-    "password": "dbuser12",
-    "database": "atlas-development",
+    "username": process.env.DATABASE_USER,
+    "password": process.env.DATABASE_PASSWORD,
+    "database": process.env.DATABASE,
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
