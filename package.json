@@ -16,14 +16,19 @@
     "express": "^4.16.4",
     "googleapis": "^37.2.0",
     "isomorphic-fetch": "^2.2.1",
+    "pg": "^7.9.0",
+    "pg-hstore": "^2.3.2",
     "qs": "^6.6.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "sequelize": "^5.2.6",
+    "sequelize-cli": "^5.4.0"
   },
   "scripts": {
     "start": "./node_modules/concurrently/bin/concurrently.js \"npm run client\" \"npm run server\"",
     "server": "./node_modules/nodemon/bin/nodemon.js server/server.js",
+    "db:setup": "cd server && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all",
     "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
