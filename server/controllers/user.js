@@ -1,4 +1,4 @@
-const User = require('../models').User;
+const User = require('../models').user;
 
 module.exports = {
   list(req, res) {
@@ -9,6 +9,6 @@ module.exports = {
         ],
       })
       .then(users => res.status(200).send(users))
-      .catch(err => { res.status(404).send(err); });
+      .catch(err => res.status(404).send(err));
   },
 };
