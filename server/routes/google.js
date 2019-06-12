@@ -1,10 +1,17 @@
 const express = require('express');
-const { authUrl, saveToken, listFiles } = require('../utils/google');
+const { findOrCreateByEmail } = require('../services/user');
+const { authUrl, getToken, listFiles, getUser } = require('../utils/google');
 
 const router = express.Router();
 
 router.get('/auth', (req, res) => {
-  saveToken(req.query.code)
+  getToken(req.query.code)
+    .then(token => getUser(token).then(user => findOrCreateByEmail({
+      email: user.email,
+      firstName: user.given_name,
+      lastName: user.family_name,
+      token: JSON.stringify(token)
+    })))
     .then(() => res.send({ success: true }));
 });
 

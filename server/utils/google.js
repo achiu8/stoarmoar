@@ -4,7 +4,9 @@ const path = require('path');
 const { google } = require('googleapis');
 
 const SCOPES = [
-  'https://www.googleapis.com/auth/drive.metadata.readonly'
+  'https://www.googleapis.com/auth/drive.metadata.readonly',
+  'https://www.googleapis.com/auth/userinfo.profile',
+  'https://www.googleapis.com/auth/userinfo.email'
 ];
 
 const TOKEN_PATH = path.resolve(__dirname, '../google_token.json');
@@ -22,14 +24,19 @@ const authUrl = () =>
     scope: SCOPES
   });
 
+const getToken = code =>
+  authClient().getToken(code)
+    .then(({ tokens }) => tokens)
+    .catch(err => console.log('Error fetching token:', err));
+
 const saveToken = code =>
   authClient().getToken(code)
-    .then(token => fs.writeFileAsync(TOKEN_PATH, JSON.stringify(token)))
+    .then(({ tokens }) => fs.writeFileAsync(TOKEN_PATH, JSON.stringify(tokens)))
     .catch(err => console.log('Error saving token:', err));
 
 const loadToken = () =>
   fs.readFileAsync(TOKEN_PATH)
-    .then(data => JSON.parse(data).tokens)
+    .then(data => JSON.parse(data))
     .catch(err => console.log('Error loading token:', err));
 
 const listFiles = () =>
@@ -45,8 +52,19 @@ const listFiles = () =>
     .then(({ data }) => data.files)
     .catch(err => console.log('The API returned an error:', err));
 
+const getUser = token => {
+  const auth = authClient();
+  auth.setCredentials(token);
+
+  return google.oauth2({ version: 'v1', auth }).userinfo.get()
+    .then(res => res.data)
+    .catch(err => console.log('The API returned an error:', err));
+};
+
 module.exports = {
   authUrl,
+  getToken,
   saveToken,
-  listFiles
+  listFiles,
+  getUser
 };
