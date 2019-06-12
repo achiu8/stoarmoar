@@ -7,7 +7,7 @@ import AddAccount from './AddAccount';
 import Files from './Files';
 import { filesForAccount } from './utils';
 
-import './Home.css';
+import './styles/Home.css';
 
 import { accounts } from './sample_data';
 

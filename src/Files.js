@@ -3,7 +3,7 @@ import { Col, Icon, Layout, Row } from 'antd';
 
 import { chunksOf, filename } from './utils';
 
-import './Files.css';
+import './styles/Files.css';
 
 const Content = Layout.Content;
 

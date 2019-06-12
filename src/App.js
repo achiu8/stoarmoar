@@ -9,7 +9,7 @@ import GoogleAuth from './GoogleAuth';
 import DropboxAuth from './DropboxAuth';
 
 import 'antd/dist/antd.css';
-import './App.css';
+import './styles/App.css';
 
 const { Header, Footer } = Layout;
 

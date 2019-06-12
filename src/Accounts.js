@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Icon, Layout, Menu } from 'antd';
 
-import './Accounts.css';
+import './styles/Accounts.css';
 
 const Sider = Layout.Sider;
 

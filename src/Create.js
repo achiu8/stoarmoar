@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Layout } from 'antd';
 
-import './Create.css';
+import './styles/Create.css';
 
 const FormItem = Form.Item;
 

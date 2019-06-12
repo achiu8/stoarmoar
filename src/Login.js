@@ -4,7 +4,7 @@ import { Form, Input, Button, Checkbox, Layout } from 'antd';
 
 import SocialAuth from './SocialAuth';
 
-import './Login.css';
+import './styles/Login.css';
 
 const FormItem = Form.Item;
 
