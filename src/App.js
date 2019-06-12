@@ -56,7 +56,7 @@ class App extends Component {
             />
           </Layout>
           <Footer>
-            2018
+            {new Date().getFullYear()}
           </Footer>
         </Layout>
       </Router>
