@@ -6,7 +6,7 @@ import Login from './Login';
 import Create from './Create';
 import Home from './Home';
 import GoogleAuth from './GoogleAuth';
-import { saveToken } from './utils/auth';
+import { getToken, saveToken } from './utils/auth';
 
 import 'antd/dist/antd.css';
 import './styles/App.css';
@@ -15,7 +15,7 @@ const { Header, Footer } = Layout;
 
 class App extends Component {
   state = {
-    loggedIn: false
+    loggedIn: getToken()
   };
 
   handleLogin = ({ token }) =>
