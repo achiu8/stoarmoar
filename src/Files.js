@@ -9,7 +9,7 @@ const Content = Layout.Content;
 
 const COLUMNS = 8;
 
-export default ({ files }) => (
+export default ({ files, onClick }) => (
   <Layout className="Files">
     <Content>
       <h1>My Files</h1>
@@ -17,9 +17,12 @@ export default ({ files }) => (
         ? <p>Select account type to view files.</p>
         : chunksOf(COLUMNS, files).map((row, i) => (
             <Row key={i} className="grid-row" gutter={48}>
-              {row.map(({ name, type }, j) => (
+              {row.map(({ id, name, type }, j) => (
                 <Col key={j} span={24 / COLUMNS}>
-                  <div className="grid-item">
+                  <div
+                    className="grid-item"
+                    onClick={() => type === 'folder' && onClick(id)}
+                  >
                     <Icon className="grid-item-icon" type={type} />
                     <span>{filename(name)}</span>
                   </div>

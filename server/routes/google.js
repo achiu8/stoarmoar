@@ -23,7 +23,7 @@ router.get('/auth-url', (req, res) => {
 
 router.get('/files', auth, (req, res) => {
   findTokenById(req.userId)
-    .then(listFiles)
+    .then(listFiles(req.query.parent))
     .then(files => res.send({ files }));
 });
 
