@@ -6,6 +6,7 @@ import Accounts from './Accounts';
 import AddAccount from './AddAccount';
 import Files from './Files';
 import { filesForAccount } from './utils';
+import { getToken } from './utils/auth';
 
 import './styles/Home.css';
 
@@ -21,7 +22,11 @@ export default class Home extends Component {
     this.setState({ modalOpen });
 
   handleFetch = id => () =>
-    fetch(`/${id}/files`)
+    fetch(`/${id}/files`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    })
       .then(res => res.json())
       .then(this.handleFiles(id));
 

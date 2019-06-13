@@ -6,7 +6,7 @@ import Login from './Login';
 import Create from './Create';
 import Home from './Home';
 import GoogleAuth from './GoogleAuth';
-import { saveToken } from './utils';
+import { saveToken } from './utils/auth';
 
 import 'antd/dist/antd.css';
 import './styles/App.css';
