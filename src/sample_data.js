@@ -21,4 +21,4 @@ export const accountTypes = [
   { id: 'amazon', name: 'Amazon Drive' },
 ];
 
-export const accounts = accountTypes.slice(0, 2);
+export const accounts = accountTypes.slice(0, 1);
