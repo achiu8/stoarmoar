@@ -39,18 +39,16 @@ const loadToken = () =>
     .then(data => JSON.parse(data))
     .catch(err => console.log('Error loading token:', err));
 
-const listFiles = () =>
-  loadToken()
-    .then(token => {
-      const auth = authClient();
-      auth.setCredentials(token);
+const listFiles = token => {
+  const auth = authClient();
+  auth.setCredentials(token);
 
-      return google.drive({ version: 'v3', auth }).files.list({
-        fields: 'nextPageToken, files(id, name, mimeType, description)'
-      })
-    })
+  return google.drive({ version: 'v3', auth }).files.list({
+    fields: 'nextPageToken, files(id, name, mimeType, description)'
+  })
     .then(({ data }) => data.files)
     .catch(err => console.log('The API returned an error:', err));
+};
 
 const getUser = token => {
   const auth = authClient();
