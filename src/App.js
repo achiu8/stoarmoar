@@ -7,6 +7,7 @@ import Create from './Create';
 import Home from './Home';
 import GoogleAuth from './GoogleAuth';
 import DropboxAuth from './DropboxAuth';
+import { saveToken } from './utils';
 
 import 'antd/dist/antd.css';
 import './styles/App.css';
@@ -18,8 +19,10 @@ class App extends Component {
     loggedIn: false
   };
 
-  handleLogin = () =>
-    this.setState({ loggedIn: true });
+  handleLogin = ({ token }) =>
+    this.setState({
+      loggedIn: true
+    }, () => saveToken(token));
 
   render() {
     const { loggedIn } = this.state;

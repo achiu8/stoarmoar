@@ -34,3 +34,6 @@ export const filesForAccount = accountType => files =>
     name: file.name,
     type: accountTypes[accountType](file)
   }));
+
+export const saveToken = token =>
+  localStorage.setItem('atlasToken', token);

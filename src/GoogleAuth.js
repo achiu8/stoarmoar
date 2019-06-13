@@ -7,7 +7,9 @@ class GoogleAuth extends Component {
     const { location, onLogin } = this.props;
     const { code } = qs.parse(location.search, { ignoreQueryPrefix: true });
 
-    fetch(`/google/auth?code=${code}`).then(onLogin);
+    fetch(`/google/auth?code=${code}`)
+      .then(res => res.json())
+      .then(onLogin);
   }
 
   render() {
