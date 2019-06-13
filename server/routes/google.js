@@ -12,7 +12,7 @@ router.get('/auth', (req, res) => {
       lastName: user.family_name,
       token: JSON.stringify(token)
     })))
-    .then(() => res.send({ success: true }));
+    .then(data => res.json(data));
 });
 
 router.get('/auth-url', (req, res) => {
