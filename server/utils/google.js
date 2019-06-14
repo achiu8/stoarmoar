@@ -43,11 +43,11 @@ const listFiles = parent => token => {
   const auth = authClient();
   auth.setCredentials(token);
 
-  const query = parent ? { q: `'${parent}' in parents` } : {};
+  const p = parent || 'root';
 
   return google.drive({ version: 'v3', auth }).files.list({
     fields: 'nextPageToken, files(id, name, mimeType, description)',
-    ...query
+    q: `'${p}' in parents`
   })
     .then(({ data }) => data.files)
     .catch(err => console.log('The API returned an error:', err));
