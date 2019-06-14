@@ -21,8 +21,8 @@ export default class Home extends Component {
   handleModal = modalOpen => () =>
     this.setState({ modalOpen });
 
-  handleFetch = id => (parent = '') => {
-    fetch(`/${id}/files?parent=${parent}`, {
+  handleFetch = id => () => {
+    fetch(`/${id}/files`, {
       headers: {
         'Authorization': `Bearer ${getToken()}`
       }
@@ -33,6 +33,8 @@ export default class Home extends Component {
 
   handleFiles = id => ({ files }) =>
     this.setState({ files: filesForAccount(id)(files) });
+
+  handleNavigate = () => {};
 
   render() {
     return !this.props.loggedIn
@@ -46,7 +48,7 @@ export default class Home extends Component {
           />
           <Files
             files={this.state.files}
-            onClick={this.handleFetch('google')}
+            onClick={this.handleNavigate}
           />
           <AddAccount
             visible={this.state.modalOpen}
