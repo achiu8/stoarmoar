@@ -1,19 +1,28 @@
 const { google } = require('googleapis');
 
-const { authClient } = require('../utils/google');
+const { authClient, isFolder } = require('../utils/google');
 
-const listFiles = parent => token => {
-  const auth = authClient();
-  auth.setCredentials(token);
-
-  const p = parent || 'root';
-
-  return google.drive({ version: 'v3', auth }).files.list({
+const listFiles = (auth, parent) =>
+  google.drive({ version: 'v3', auth }).files.list({
     fields: 'nextPageToken, files(id, name, mimeType, description)',
-    q: `'${p}' in parents`
+    q: `'${parent}' in parents`
   })
     .then(({ data }) => data.files)
     .catch(err => console.log('The API returned an error:', err));
+
+const crawlFiles = token => {
+  const auth = authClient();
+  auth.setCredentials(token);
+
+  const crawl = files =>
+    Promise.all(files.map(file =>
+      isFolder(file)
+        ? listFiles(auth, file.id)
+            .then(crawl)
+            .then(files => ({ ...file, files }))
+        : file));
+
+  return crawl([{ id: 'root' }]);
 };
 
 const getUser = token => {
@@ -26,6 +35,6 @@ const getUser = token => {
 };
 
 module.exports = {
-  listFiles,
+  crawlFiles,
   getUser
 };

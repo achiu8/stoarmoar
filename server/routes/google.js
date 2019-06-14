@@ -2,7 +2,7 @@ const express = require('express');
 
 const auth = require('../middlewares/auth');
 const { findTokenById, findOrCreateByEmail } = require('../services/user');
-const { listFiles, getUser } = require('../services/google');
+const { crawlFiles, getUser } = require('../services/google');
 const { authUrl, getToken } = require('../utils/google');
 
 const router = express.Router();
@@ -24,8 +24,8 @@ router.get('/auth-url', (req, res) => {
 
 router.get('/files', auth, (req, res) => {
   findTokenById(req.userId)
-    .then(listFiles(req.query.parent))
-    .then(files => res.send({ files }));
+    .then(crawlFiles)
+    .then(([files]) => res.send(files));
 });
 
 module.exports = router;

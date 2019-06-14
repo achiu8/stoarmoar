@@ -39,9 +39,13 @@ const loadToken = () =>
     .then(data => JSON.parse(data))
     .catch(err => console.log('Error loading token:', err));
 
+const isFolder = ({ id, mimeType }) =>
+  id === 'root' || mimeType === 'application/vnd.google-apps.folder';
+
 module.exports = {
   authClient,
   authUrl,
   getToken,
-  saveToken
+  saveToken,
+  isFolder
 };
