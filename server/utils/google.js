@@ -10,6 +10,7 @@ const SCOPES = [
 ];
 
 const TOKEN_PATH = path.resolve(__dirname, '../google_token.json');
+const FILES_PATH = path.resolve(__dirname, '../google_files.json');
 
 const authClient = () =>
   new google.auth.OAuth2(
@@ -42,10 +43,20 @@ const loadToken = () =>
 const isFolder = ({ id, mimeType }) =>
   id === 'root' || mimeType === 'application/vnd.google-apps.folder';
 
+const saveFiles = files =>
+  fs.writeFileAsync(FILES_PATH, JSON.stringify(files));
+
+const loadFiles = () =>
+  fs.readFileAsync(FILES_PATH)
+    .then(data => JSON.parse(data))
+    .catch(err => console.log('Error loading files:', err));;
+
 module.exports = {
   authClient,
   authUrl,
   getToken,
   saveToken,
-  isFolder
+  isFolder,
+  saveFiles,
+  loadFiles
 };
