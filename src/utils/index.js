@@ -33,5 +33,5 @@ export const filesForAccount = accountType => files =>
   files.map(file => ({
     id: file.id,
     name: file.name,
-    type: accountTypes[accountType](file)
+    type: accountTypes[accountType](file) || 'file'
   }));
