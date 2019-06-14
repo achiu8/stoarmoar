@@ -2,7 +2,8 @@ const express = require('express');
 
 const auth = require('../middlewares/auth');
 const { findTokenById, findOrCreateByEmail } = require('../services/user');
-const { authUrl, getToken, listFiles, getUser } = require('../utils/google');
+const { listFiles, getUser } = require('../services/google');
+const { authUrl, getToken } = require('../utils/google');
 
 const router = express.Router();
 
