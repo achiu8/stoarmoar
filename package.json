@@ -31,6 +31,7 @@
   "scripts": {
     "start": "./node_modules/concurrently/bin/concurrently.js \"npm run client\" \"npm run server\"",
     "server": "./node_modules/nodemon/bin/nodemon.js server/server.js",
+    "db:migrate": "npx sequelize db:migrate",
     "db:setup": "cd server && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all",
     "client": "react-scripts start",
     "build": "react-scripts build",
