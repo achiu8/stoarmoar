@@ -2,11 +2,14 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Account = sequelize.define('account', {
-    name: DataTypes.STRING
+    userId: DataTypes.INTEGER,
+    providerId: DataTypes.INTEGER,
+    token: DataTypes.JSON,
+    files: DataTypes.JSON
   }, {});
 
   Account.associate = function(models) {
-    // associations can be defined here
+    Account.belongsTo(models.user, { foreignKey: 'userId' });
   };
 
   return Account;

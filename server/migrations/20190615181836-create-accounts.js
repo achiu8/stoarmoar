@@ -9,8 +9,28 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      },
+      providerId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'providers',
+          key: 'id'
+        }
+      },
+      token: {
+        type: Sequelize.JSON,
+        allowNull: false
+      },
+      files: {
+        type: Sequelize.JSON
       },
       createdAt: {
         allowNull: false,
@@ -21,7 +41,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
- },
+  },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('accounts');
