@@ -44,12 +44,16 @@ const isFolder = ({ id, mimeType }) =>
   id === 'root' || mimeType === 'application/vnd.google-apps.folder';
 
 const saveFiles = files =>
-  fs.writeFileAsync(FILES_PATH, JSON.stringify(files));
+  fs.writeFileAsync(FILES_PATH, JSON.stringify(files))
+    .then(() => files);
 
 const loadFiles = () =>
   fs.readFileAsync(FILES_PATH)
     .then(data => JSON.parse(data))
-    .catch(err => console.log('Error loading files:', err));;
+    .catch(err => {
+      console.log('Error loading files:', err);
+      return false;
+    });
 
 module.exports = {
   authClient,

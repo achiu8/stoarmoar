@@ -24,6 +24,7 @@ router.get('/auth-url', (req, res) => {
 
 router.get('/files', auth, (req, res) => {
   loadFiles()
+    .then(data => data ? data : findTokenById(req.userId).then(crawlFiles).then(saveFiles))
     .then(([files]) => res.send(files));
 });
 
