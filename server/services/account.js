@@ -7,13 +7,6 @@ const findOrCreateByUserAndProvider = (userId, providerId, token) =>
     defaults: { token }
   });
 
-const findTokenByUserAndProvider = (userId, providerId) =>
-  Account.findOne({
-    where: { userId, providerId },
-    attributes: ['token']
-  })
-    .then(account => account.get('token'));
-
 const findFilesByUserAndProvider = (userId, providerId) =>
   Account.findOne({
     where: { userId, providerId }
@@ -26,6 +19,5 @@ const findFilesByUserAndProvider = (userId, providerId) =>
 
 module.exports = {
   findOrCreateByUserAndProvider,
-  findTokenByUserAndProvider,
   findFilesByUserAndProvider
 };
