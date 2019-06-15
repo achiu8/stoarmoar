@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 
+import Header from './Header';
 import Login from './Login';
 import Create from './Create';
 import Home from './Home';
@@ -9,8 +10,6 @@ import GoogleAuth from './GoogleAuth';
 import { getToken, saveToken } from './utils/auth';
 
 import './styles/App.css';
-
-const { Header, Footer } = Layout;
 
 class App extends Component {
   state = {
@@ -46,9 +45,9 @@ class App extends Component {
               )}
             />
           </Layout>
-          <Footer className="App-footer">
+          <Layout.Footer className="App-footer">
             {new Date().getFullYear()}
-          </Footer>
+          </Layout.Footer>
         </Layout>
       </Router>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb, Col, Icon, Layout, Row } from 'antd';
+import { Breadcrumb, Col, Empty, Icon, Layout, Row } from 'antd';
 
 import { chunksOf, filename, filesForAccount } from './utils';
 
@@ -32,7 +32,12 @@ export default ({ account, breadcrumbs, files, onClick, onBreadcrumb }) => (
         {renderBreadcrumbs(breadcrumbs, onBreadcrumb)}
       </div>
       {!files.length
-        ? <p>Select account type to view files.</p>
+        ? (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Select account to view files."
+            />
+          )
         : chunksOf(COLUMNS, filesForAccount(account, files)).map((row, i) => (
             <Row key={i} className="grid-row" gutter={48}>
               {row.map(({ id, name, type }, j) => (
