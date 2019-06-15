@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     firstName: DataTypes.STRING,
@@ -8,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.user, { as: 'accounts' });
   };
+
   return User;
 };
