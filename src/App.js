@@ -47,7 +47,7 @@ class App extends Component {
               )}
             />
           </Layout>
-          <Footer>
+          <Footer className="App-footer">
             {new Date().getFullYear()}
           </Footer>
         </Layout>

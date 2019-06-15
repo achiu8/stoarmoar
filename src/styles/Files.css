@@ -1,5 +1,10 @@
 .Files {
-  padding: 25px;
+  padding: 20px;
+}
+
+.Files-content {
+  padding: 20px;
+  background-color: #fff;
 }
 
 .Files-breadcrumbs {
@@ -8,7 +13,7 @@
 
 .Files-breadcrumb {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .Files-breadcrumb:hover {

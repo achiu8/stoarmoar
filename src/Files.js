@@ -27,7 +27,7 @@ const renderBreadcrumbs = (breadcrumbs, onClick) => (
 
 export default ({ account, breadcrumbs, files, onClick, onBreadcrumb }) => (
   <Layout className="Files">
-    <Content>
+    <Content className="Files-content">
       <div className="Files-breadcrumbs">
         {renderBreadcrumbs(breadcrumbs, onBreadcrumb)}
       </div>
