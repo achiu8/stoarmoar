@@ -8,7 +8,6 @@ import Home from './Home';
 import GoogleAuth from './GoogleAuth';
 import { getToken, saveToken } from './utils/auth';
 
-import 'antd/dist/antd.css';
 import './styles/App.css';
 
 const { Header, Footer } = Layout;
