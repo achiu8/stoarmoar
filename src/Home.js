@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
+import { path as getPath, compose, flatten, prop, repeat, zip } from 'ramda';
 
 import Accounts from './Accounts';
 import AddAccount from './AddAccount';
 import Files from './Files';
-import { filesForAccount } from './utils';
 import { getToken } from './utils/auth';
 
 import './styles/Home.css';
 
 import { accounts } from './sample_data';
 
+const getIn = (path, files) =>
+  getPath(compose(
+    flatten,
+    zip(path),
+    repeat('files'),
+    prop('length')
+  )(files), files);
+
 export default class Home extends Component {
   state = {
+    account: null,
     modalOpen: false,
-    files: []
+    files: [],
+    path: []
   };
 
   handleModal = modalOpen => () =>
@@ -31,12 +41,15 @@ export default class Home extends Component {
       .then(this.handleFiles(id));
   }
 
-  handleFiles = id => ({ files }) =>
-    this.setState({ files: filesForAccount(id)(files) });
+  handleFiles = account => ({ files }) =>
+    this.setState({ account, files });
 
-  handleNavigate = () => {};
+  handleNavigate = i =>
+    this.setState({ path: [...this.state.path, i] });
 
   render() {
+    const { account, modalOpen, files, path } = this.state;
+
     return !this.props.loggedIn
       ? <Redirect to="/login" />
       : (
@@ -47,11 +60,12 @@ export default class Home extends Component {
             onFetch={this.handleFetch}
           />
           <Files
-            files={this.state.files}
+            account={account}
+            files={getIn(path, files)}
             onClick={this.handleNavigate}
           />
           <AddAccount
-            visible={this.state.modalOpen}
+            visible={modalOpen}
             onCancel={this.handleModal(false)}
           />
         </Layout>

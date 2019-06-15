@@ -29,9 +29,10 @@ const accountTypes = {
   dropbox: file => file['.tag']
 };
 
-export const filesForAccount = accountType => files =>
+export const filesForAccount = (accountType, files) =>
   files.map(file => ({
     id: file.id,
     name: file.name,
+    files: file.files,
     type: accountTypes[accountType](file) || 'file'
   }));
