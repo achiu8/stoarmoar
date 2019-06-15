@@ -21,7 +21,6 @@ export default ({ accounts, onAddAccountClick, onFetch }) => (
       block
       onClick={onAddAccountClick}
     >
-      <Icon type="plus" />
       <span>Add Account</span>
     </Button>
   </Sider>
