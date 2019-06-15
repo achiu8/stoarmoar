@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Icon, Layout, Row } from 'antd';
+import { Breadcrumb, Col, Icon, Layout, Row } from 'antd';
 
 import { chunksOf, filename, filesForAccount } from './utils';
 
@@ -11,10 +11,26 @@ const COLUMNS = 8;
 
 const position = (i, j) => COLUMNS * i + j;
 
-export default ({ account, files, onClick }) => (
+const renderBreadcrumbs = (breadcrumbs, onClick) => (
+  <Breadcrumb separator=">">
+    {['My Files', ...breadcrumbs].map((breadcrumb, i) => (
+      <Breadcrumb.Item
+        key={i}
+        className="Files-breadcrumb"
+        onClick={() => onClick(i)}
+      >
+        {breadcrumb}
+      </Breadcrumb.Item>
+    ))}
+  </Breadcrumb>
+);
+
+export default ({ account, breadcrumbs, files, onClick, onBreadcrumb }) => (
   <Layout className="Files">
     <Content>
-      <h1>My Files</h1>
+      <div className="Files-breadcrumbs">
+        {renderBreadcrumbs(breadcrumbs, onBreadcrumb)}
+      </div>
       {!files.length
         ? <p>Select account type to view files.</p>
         : chunksOf(COLUMNS, filesForAccount(account, files)).map((row, i) => (
@@ -23,7 +39,7 @@ export default ({ account, files, onClick }) => (
                 <Col key={j} span={24 / COLUMNS}>
                   <div
                     className="grid-item"
-                    onClick={() => type === 'folder' && onClick(position(i, j))}
+                    onClick={() => type === 'folder' && onClick(name, position(i, j))}
                   >
                     <Icon className="grid-item-icon" type={type} />
                     <span>{filename(name)}</span>

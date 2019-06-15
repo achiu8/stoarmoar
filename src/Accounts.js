@@ -7,7 +7,7 @@ const Sider = Layout.Sider;
 
 export default ({ accounts, onAddAccountClick, onFetch }) => (
   <Sider className="Accounts" theme="light">
-    <h1 className="Accounts-heading">Accounts</h1>
+    <div className="Accounts-heading">Accounts</div>
     <Menu className="Accounts-accounts" mode="inline">
       {accounts.map(({ id, name }) => (
         <Menu.Item key={id} className="Accounts-account" onClick={onFetch(id)}>

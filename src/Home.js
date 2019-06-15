@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
-import { path as getPath, compose, flatten, prop, repeat, zip } from 'ramda';
+import { path as getPath, compose, flatten, pluck, prop, repeat, zip } from 'ramda';
 
 import Accounts from './Accounts';
 import AddAccount from './AddAccount';
@@ -15,10 +15,13 @@ import { accounts } from './sample_data';
 const getIn = (path, files) =>
   getPath(compose(
     flatten,
-    zip(path),
+    zip(pluck('i', path)),
     repeat('files'),
     prop('length')
   )(files), files);
+
+const breadcrumbs = path =>
+  pluck('name', path);
 
 export default class Home extends Component {
   state = {
@@ -44,8 +47,16 @@ export default class Home extends Component {
   handleFiles = account => ({ files }) =>
     this.setState({ account, files });
 
-  handleNavigate = i =>
-    this.setState({ path: [...this.state.path, i] });
+  handleNavigate = (name, i) =>
+    this.setState({
+      path: [
+        ...this.state.path,
+        { name, i }
+      ]
+    });
+
+  handleBreadcrumb = i =>
+    this.setState({ path: this.state.path.slice(0, i) });
 
   render() {
     const { account, modalOpen, files, path } = this.state;
@@ -61,8 +72,10 @@ export default class Home extends Component {
           />
           <Files
             account={account}
+            breadcrumbs={breadcrumbs(path)}
             files={getIn(path, files)}
             onClick={this.handleNavigate}
+            onBreadcrumb={this.handleBreadcrumb}
           />
           <AddAccount
             visible={modalOpen}

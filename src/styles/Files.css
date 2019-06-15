@@ -1,3 +1,16 @@
 .Files {
   padding: 25px;
 }
+
+.Files-breadcrumbs {
+  margin-bottom: 25px;
+}
+
+.Files-breadcrumb {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.Files-breadcrumb:hover {
+  text-decoration: underline;
+}
