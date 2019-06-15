@@ -1,5 +1,5 @@
-const { compose, head } = require('ramda');
 const User = require('../models').user;
+const Account = require('../models').account;
 const { withToken } = require('../utils//auth');
 
 const findOrCreateByEmail = ({ email, firstName, lastName, token }) =>
@@ -7,7 +7,14 @@ const findOrCreateByEmail = ({ email, firstName, lastName, token }) =>
     where: { email },
     defaults: { firstName, lastName, token }
   })
-    .then(compose(withToken, head))
+    .then(([user]) => Account.findOrCreate({
+      where: {
+        userId: user.id,
+        providerId: 1
+      },
+      defaults: { token }
+    }).then(() => user))
+    .then(withToken)
     .catch(err => console.log('Error finding or creating user:', err));
 
 const findTokenById = id =>
