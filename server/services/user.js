@@ -1,19 +1,13 @@
 const User = require('../models').user;
-const Account = require('../models').account;
 const { withToken } = require('../utils//auth');
+const { findOrCreateByUserAndProvider } = require('./account');
 
 const findOrCreateByEmail = ({ email, firstName, lastName, token }) =>
   User.findOrCreate({
     where: { email },
-    defaults: { firstName, lastName, token }
+    defaults: { firstName, lastName }
   })
-    .then(([user]) => Account.findOrCreate({
-      where: {
-        userId: user.id,
-        providerId: 1
-      },
-      defaults: { token }
-    }).then(() => user))
+    .then(([user]) => findOrCreateByUserAndProvider(user.id, 1, token).then(() => user))
     .then(withToken)
     .catch(err => console.log('Error finding or creating user:', err));
 

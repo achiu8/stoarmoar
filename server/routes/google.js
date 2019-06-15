@@ -14,7 +14,7 @@ router.get('/auth', (req, res) => {
       email: user.email,
       firstName: user.given_name,
       lastName: user.family_name,
-      token: JSON.stringify(token)
+      token
     })))
     .then(data => res.json(data));
 });
