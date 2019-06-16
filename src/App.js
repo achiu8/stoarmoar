@@ -27,7 +27,7 @@ class App extends Component {
     return (
       <Router>
         <Layout>
-          <Header>
+          <Header loggedIn={loggedIn}>
             Atlas
           </Header>
           <Layout>
