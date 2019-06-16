@@ -1,5 +1,6 @@
 const { google } = require('googleapis');
 
+const { traverse, sleep } = require('../utils/async');
 const { authClient, isFolder } = require('../utils/google');
 
 const listFiles = (auth, parent) =>
@@ -15,12 +16,13 @@ const crawlFiles = token => {
   auth.setCredentials(token);
 
   const crawl = files =>
-    Promise.all(files.map(file =>
+    traverse(files, file =>
       isFolder(file)
         ? listFiles(auth, file.id)
+            .then(sleep(100))
             .then(crawl)
             .then(files => ({ ...file, files }))
-        : file));
+        : Promise.resolve(file));
 
   return crawl([{ id: 'root' }]);
 };
