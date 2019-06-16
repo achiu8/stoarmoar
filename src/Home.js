@@ -26,6 +26,7 @@ const breadcrumbs = path =>
 export default class Home extends Component {
   state = {
     account: null,
+    loading: false,
     modalOpen: false,
     files: [],
     path: []
@@ -34,18 +35,24 @@ export default class Home extends Component {
   handleModal = modalOpen => () =>
     this.setState({ modalOpen });
 
-  handleFetch = id => () => {
-    fetch(`/${id}/files`, {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`
-      }
-    })
-      .then(res => res.json())
-      .then(this.handleFiles(id));
-  }
+  handleFetch = id => () =>
+    this.setState({ loading: true }, () =>
+      fetch(`/${id}/files`, {
+        headers: {
+          'Authorization': `Bearer ${getToken()}`
+        }
+      })
+        .then(res => res.json())
+        .then(this.handleFiles(id))
+        .catch(() => this.setState({ loading: false }))
+    );
 
   handleFiles = account => ({ files }) =>
-    this.setState({ account, files });
+    this.setState({
+      account,
+      files,
+      loading: false
+    });
 
   handleNavigate = (name, i) =>
     this.setState({
@@ -59,7 +66,7 @@ export default class Home extends Component {
     this.setState({ path: this.state.path.slice(0, i) });
 
   render() {
-    const { account, modalOpen, files, path } = this.state;
+    const { account, loading, modalOpen, files, path } = this.state;
 
     return !this.props.loggedIn
       ? <Redirect to="/login" />
@@ -74,6 +81,7 @@ export default class Home extends Component {
             account={account}
             breadcrumbs={breadcrumbs(path)}
             files={getIn(path, files)}
+            loading={loading}
             onClick={this.handleNavigate}
             onBreadcrumb={this.handleBreadcrumb}
           />
