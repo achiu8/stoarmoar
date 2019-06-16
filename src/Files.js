@@ -25,6 +25,13 @@ const renderBreadcrumbs = (breadcrumbs, onClick) => (
   </Breadcrumb>
 );
 
+const renderEmpty = accountSelected => (
+  <Empty
+    image={Empty.PRESENTED_IMAGE_SIMPLE}
+    description={accountSelected ? 'Folder is empty.' : 'Select account to view files.'}
+  />
+);
+
 export default ({ account, breadcrumbs, files, onClick, onBreadcrumb }) => (
   <Layout className="Files">
     <Content className="Files-content">
@@ -32,12 +39,7 @@ export default ({ account, breadcrumbs, files, onClick, onBreadcrumb }) => (
         {renderBreadcrumbs(breadcrumbs, onBreadcrumb)}
       </div>
       {!files.length
-        ? (
-            <Empty
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description="Select account to view files."
-            />
-          )
+        ? renderEmpty(account)
         : chunksOf(COLUMNS, filesForAccount(account, files)).map((row, i) => (
             <Row key={i} className="grid-row" gutter={48}>
               {row.map(({ id, name, type }, j) => (
