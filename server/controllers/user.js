@@ -1,9 +1,10 @@
-const User = require('../models').user;
+const { user, account } = require('../models');
 
 module.exports = {
   list(req, res) {
-    return User
+    return user
       .findAll({
+        include: [account],
         order: [
           ['createdAt', 'DESC'],
         ],
