@@ -39,12 +39,12 @@ class App extends Component {
     }, () => saveToken(token));
 
   render() {
-    const { loggedIn } = this.state;
+    const { loggedIn, user } = this.state;
 
     return (
       <Router>
         <Layout>
-          <Header loggedIn={loggedIn}>
+          <Header loggedIn={loggedIn} user={user}>
             Atlas
           </Header>
           <Layout>

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Avatar, Col, Dropdown, Layout, Menu, Row } from 'antd';
 
+const initials = ({ firstName, lastName }) =>
+  `${firstName[0]}${lastName[0]}`;
+
 const menu = (
   <Menu>
     <Menu.Item>Settings</Menu.Item>
@@ -8,13 +11,13 @@ const menu = (
   </Menu>
 );
 
-export default ({ loggedIn }) => (
+export default ({ loggedIn, user }) => (
   <Layout.Header>
     <Row type="flex" justify="end">
       <Col>
-      {loggedIn && (
+      {loggedIn && user && (
         <Dropdown placement="bottomRight" overlay={menu}>
-          <Avatar icon="user" />
+          <Avatar>{initials(user)}</Avatar>
         </Dropdown>
       )}
       </Col>
