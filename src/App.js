@@ -13,8 +13,25 @@ import './styles/App.css';
 
 class App extends Component {
   state = {
-    loggedIn: getToken()
+    loggedIn: getToken(),
+    user: null
   };
+
+  componentDidMount() {
+    fetch('/api/current', {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    })
+      .then(res => res.json())
+      .then(user => {
+        if (user.success === false) {
+          return this.setState({ loggedIn: false });
+        }
+
+        this.setState({ user });
+      });
+  }
 
   handleLogin = ({ token }) =>
     this.setState({
