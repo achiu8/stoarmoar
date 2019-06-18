@@ -10,8 +10,6 @@ import { getToken } from './utils/auth';
 
 import './styles/Home.css';
 
-import { accounts } from './sample_data';
-
 const getIn = (path, files) =>
   getPath(compose(
     flatten,
@@ -22,6 +20,9 @@ const getIn = (path, files) =>
 
 const breadcrumbs = path =>
   pluck('name', path);
+
+const accounts = user =>
+  !user ? [] : user.accounts.map(getPath(['provider', 'name']));
 
 export default class Home extends Component {
   state = {
@@ -73,7 +74,7 @@ export default class Home extends Component {
       : (
         <Layout>
           <Accounts
-            accounts={accounts}
+            accounts={accounts(this.props.user)}
             onAddAccountClick={this.handleModal(true)}
             onFetch={this.handleFetch}
           />

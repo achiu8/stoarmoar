@@ -3,15 +3,17 @@ import { Button, Icon, Layout, Menu } from 'antd';
 
 import './styles/Accounts.css';
 
+import { accountName } from './utils';
+
 const Sider = Layout.Sider;
 
 export default ({ accounts, onAddAccountClick, onFetch }) => (
   <Sider className="Accounts" theme="light">
     <Menu className="Accounts-accounts" mode="inline">
-      {accounts.map(({ id, name }) => (
+      {accounts.map(id => (
         <Menu.Item key={id} className="Accounts-account" onClick={onFetch(id)}>
           <Icon type={id} />
-          <span>{name}</span>
+          <span>{accountName(id)}</span>
         </Menu.Item>
       ))}
     </Menu>

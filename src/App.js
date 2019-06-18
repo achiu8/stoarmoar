@@ -48,7 +48,7 @@ class App extends Component {
             Atlas
           </Header>
           <Layout>
-            <Route exact path="/" render={props => <Home loggedIn={loggedIn} />} />
+            <Route exact path="/" render={props => <Home loggedIn={loggedIn} user={user} />} />
             <Route path="/login" render={props => <Login {...props} onLogin={this.handleLogin} />} />
             <Route path="/create" component={Create} />
             <Route

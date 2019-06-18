@@ -29,6 +29,14 @@ const accountTypes = {
   dropbox: file => file['.tag']
 };
 
+export const accountName = name => ({
+  google: 'Google Drive',
+  dropbox: 'Dropbox',
+  apple: 'iCloud',
+  windows: 'OneDrive',
+  amazon: 'Amazon Drive'
+})[name];
+
 export const filesForAccount = (accountType, files) =>
   files.map(file => ({
     id: file.id,
