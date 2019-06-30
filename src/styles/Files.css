@@ -19,3 +19,7 @@
 .Files-breadcrumb:hover {
   text-decoration: underline;
 }
+
+.Files-icon {
+  font-size: 20px;
+}

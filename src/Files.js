@@ -1,15 +1,24 @@
 import React from 'react';
-import { Breadcrumb, Col, Empty, Icon, Layout, Row, Spin } from 'antd';
+import { Breadcrumb, Empty, Icon, Layout, Spin, Table } from 'antd';
 
-import { chunksOf, filename, filesForAccount } from './utils';
+import { filesForAccount } from './utils';
 
 import './styles/Files.css';
 
 const Content = Layout.Content;
 
-const COLUMNS = 8;
-
-const position = (i, j) => COLUMNS * i + j;
+const columns = [
+  {
+    name: 'Type',
+    dataIndex: 'type',
+    width: 20,
+    render: type => <Icon className="Files-icon" type={type} />
+  },
+  {
+    name: 'Name',
+    dataIndex: 'name'
+  }
+];
 
 const renderBreadcrumbs = (breadcrumbs, onClick) => (
   <Breadcrumb separator=">">
@@ -41,21 +50,17 @@ export default ({ account, breadcrumbs, files, loading, onClick, onBreadcrumb })
         </div>
         {!files.length
           ? renderEmpty(account)
-          : chunksOf(COLUMNS, filesForAccount(account, files)).map((row, i) => (
-              <Row key={i} className="grid-row" gutter={48}>
-                {row.map(({ id, name, type }, j) => (
-                  <Col key={j} span={24 / COLUMNS}>
-                    <div
-                      className="grid-item"
-                      onClick={() => type === 'folder' && onClick(name, position(i, j))}
-                    >
-                      <Icon className="grid-item-icon" type={type} />
-                      <span>{filename(name)}</span>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
-            ))
+          : <Table
+              columns={columns}
+              dataSource={filesForAccount(account, files)}
+              onRow={({ name, type }, i) => ({
+                onClick: () => type === 'folder' && onClick(name, i)
+              })}
+              rowKey={({ id }) => id}
+              size="middle"
+              pagination={false}
+              showHeader={false}
+            />
         }
       </Content>
     </Spin>
