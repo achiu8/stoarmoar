@@ -38,7 +38,7 @@ export default class Home extends Component {
 
   handleFetch = id => () =>
     this.setState({ loading: true }, () =>
-      fetch(`/${id}/files`, {
+      fetch(`/api/${id}/files`, {
         headers: {
           'Authorization': `Bearer ${getToken()}`
         }
