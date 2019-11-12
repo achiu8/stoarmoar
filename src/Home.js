@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
-import { path as getPath, compose, flatten, pluck, prop, repeat, zip } from 'ramda';
+import {
+  path as getPath,
+  compose,
+  flatten,
+  lensPath,
+  over,
+  pluck,
+  prop,
+  repeat,
+  zip
+} from 'ramda';
 
 import Accounts from './Accounts';
 import AddAccount from './AddAccount';
@@ -10,19 +20,29 @@ import { getToken } from './utils/auth';
 
 import './styles/Home.css';
 
-const getIn = (path, files) =>
-  getPath(compose(
+const buildPath = path =>
+  compose(
     flatten,
     zip(pluck('i', path)),
     repeat('files'),
     prop('length')
-  )(files), files);
+  )(path);
+
+const getIn = (path, files) =>
+  getPath(buildPath(path), files);
 
 const breadcrumbs = path =>
   pluck('name', path);
 
 const accounts = user =>
   !user ? [] : user.accounts.map(getPath(['provider', 'name']));
+
+const move = (from, to) => files =>
+  files
+    .map((file, i) => i === to
+      ? { ...file, files: [...file.files, files[from]] }
+      : file)
+    .filter((_, i) => i !== from);
 
 export default class Home extends Component {
   state = {
@@ -69,11 +89,11 @@ export default class Home extends Component {
 
   handleMove = (from, to) =>
     from !== to && this.setState({
-      files: this.state.files
-        .map((file, i) => i === to
-          ? { ...file, files: [...file.files, this.state.files[from]] }
-          : file)
-        .filter((_, i) => i !== from)
+      files: over(
+        lensPath(buildPath(this.state.path)),
+        move(from, to),
+        this.state.files
+      )
     }, this.handleUpdate);
 
   handleNavigate = (name, i) =>
