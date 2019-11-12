@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
+import api from './utils/api';
+
 class SocialAuth extends Component {
   state = {
     google: ''
   };
 
   componentDidMount() {
-    fetch('/google/auth-url')
-      .then(res => res.json())
+    api.get('/api/google/auth-url')
       .then(({ url }) => this.setState({ google: url }));
   }
 
