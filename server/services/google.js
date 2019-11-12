@@ -21,7 +21,7 @@ const crawlFiles = token => {
         ? listFiles(auth, file.id)
             .then(sleep(100))
             .then(crawl)
-            .then(files => ({ ...file, files }))
+            .then(children => ({ ...file, files: children }))
         : Promise.resolve(file));
 
   return crawl([{ id: 'root' }]);
