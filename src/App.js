@@ -7,6 +7,7 @@ import Login from './Login';
 import Create from './Create';
 import Home from './Home';
 import GoogleAuth from './GoogleAuth';
+import api from './utils/api';
 import { getToken, saveToken } from './utils/auth';
 
 import './styles/App.css';
@@ -18,12 +19,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch('/api/users/current', {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`
-      }
-    })
-      .then(res => res.json())
+    api.get('/api/users/current')
       .then(user => {
         if (user.success === false) {
           return this.setState({ loggedIn: false });

@@ -16,7 +16,7 @@ import {
 import Accounts from './Accounts';
 import AddAccount from './AddAccount';
 import Files from './Files';
-import { getToken } from './utils/auth';
+import api from './utils/api';
 
 import './styles/Home.css';
 
@@ -58,26 +58,15 @@ export default class Home extends Component {
 
   handleFetch = id => () =>
     this.setState({ loading: true }, () =>
-      fetch(`/api/${id}/files`, {
-        headers: {
-          'Authorization': `Bearer ${getToken()}`
-        }
-      })
-        .then(res => res.json())
+      api.get(`/api/${id}/files`)
         .then(this.handleFiles(id))
         .catch(() => this.setState({ loading: false }))
     );
 
   handleUpdate = () =>
-    fetch(`/api/${this.state.account}/files`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-        'Content-Type': 'application/json'
-      },
+    api.post(`/api/${this.state.account}/files`, {
       body: JSON.stringify(this.state.files)
     })
-      .then(res => res.json())
       .then(this.handleFiles(this.state.account));
 
   handleFiles = account => ({ files }) =>
