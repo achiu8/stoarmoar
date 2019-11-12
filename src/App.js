@@ -18,7 +18,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch('/api/current', {
+    fetch('/api/users/current', {
       headers: {
         'Authorization': `Bearer ${getToken()}`
       }
