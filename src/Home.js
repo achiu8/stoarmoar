@@ -104,9 +104,9 @@ export default class Home extends Component {
             breadcrumbs={breadcrumbs(path)}
             files={getIn(path, files)}
             loading={loading}
-            onClick={this.handleNavigate}
             onBreadcrumb={this.handleBreadcrumb}
             onMove={this.handleMove}
+            onNavigate={this.handleNavigate}
           />
           <AddAccount
             visible={modalOpen}

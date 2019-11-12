@@ -41,7 +41,7 @@ const renderEmpty = account => (
   />
 );
 
-export default ({ account, breadcrumbs, files, loading, onClick, onBreadcrumb, onMove }) => {
+export default ({ account, breadcrumbs, files, loading, onNavigate, onBreadcrumb, onMove }) => {
   const [dragging, setDragging] = useState(null);
 
   return (
@@ -58,7 +58,7 @@ export default ({ account, breadcrumbs, files, loading, onClick, onBreadcrumb, o
                 dataSource={filesForAccount(account, files)}
                 onRow={({ name, type }, i) => ({
                   draggable: true,
-                  onClick: () => type === 'folder' && onClick(name, i),
+                  onClick: () => type === 'folder' && onNavigate(name, i),
                   onDragEnd: () => setDragging(null),
                   onDragOver: e => e.preventDefault(),
                   onDragStart: () => setDragging(i),
