@@ -48,12 +48,33 @@ export default class Home extends Component {
         .catch(() => this.setState({ loading: false }))
     );
 
+  handleUpdate = () =>
+    fetch(`/api/${this.state.account}/files`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state.files)
+    })
+      .then(res => res.json())
+      .then(this.handleFiles(this.state.account));
+
   handleFiles = account => ({ files }) =>
     this.setState({
       account,
       files,
       loading: false
     });
+
+  handleMove = (from, to) =>
+    from !== to && this.setState({
+      files: this.state.files
+        .map((file, i) => i === to
+          ? { ...file, files: [...file.files, this.state.files[from]] }
+          : file)
+        .filter((_, i) => i !== from)
+    }, this.handleUpdate);
 
   handleNavigate = (name, i) =>
     this.setState({
@@ -85,6 +106,7 @@ export default class Home extends Component {
             loading={loading}
             onClick={this.handleNavigate}
             onBreadcrumb={this.handleBreadcrumb}
+            onMove={this.handleMove}
           />
           <AddAccount
             visible={modalOpen}
