@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Breadcrumb, Empty, Icon, Layout, Spin, Table } from 'antd';
 
+import DragAndDrop from './DragAndDrop';
 import { filesForAccount } from './utils';
 
 import './styles/Files.css';
@@ -41,37 +42,54 @@ const renderEmpty = account => (
   />
 );
 
-export default ({ account, breadcrumbs, files, loading, onNavigate, onBreadcrumb, onMove }) => {
-  const [dragging, setDragging] = useState(null);
+const components = onMove => ({
+  body: {
+    row: ({ children, i, type, ...rest }) => (
+      <DragAndDrop.Draggable i={i} render={draggableProps => (
+        <DragAndDrop.Droppable
+          droppable={type === 'folder'}
+          i={i}
+          onDrop={onMove}
+          render={droppableProps => (
+            <tr {...rest} {...draggableProps} {...droppableProps}>
+              {children}
+            </tr>
+          )}
+        />
+      )} />
+    )
+  }
+});
 
-  return (
-    <Layout className="Files">
-      <Spin size="large" spinning={loading}>
-        <Content className="Files-content">
-          <div className="Files-breadcrumbs">
-            {renderBreadcrumbs(breadcrumbs, onBreadcrumb)}
-          </div>
-          {!files.length
-            ? renderEmpty(account)
-            : <Table
-                columns={columns}
-                dataSource={filesForAccount(account, files)}
-                onRow={({ name, type }, i) => ({
-                  draggable: true,
-                  onClick: () => type === 'folder' && onNavigate(name, i),
-                  onDragEnd: () => setDragging(null),
-                  onDragOver: e => e.preventDefault(),
-                  onDragStart: () => setDragging(i),
-                  onDrop: () => type === 'folder' && dragging !== null && onMove(dragging, i)
-                })}
-                rowKey={({ id }) => id}
-                size="middle"
-                pagination={false}
-                showHeader={false}
-              />
-          }
-        </Content>
-      </Spin>
-    </Layout>
-  );
-};
+export default ({ account, breadcrumbs, files, loading, onNavigate, onBreadcrumb, onMove }) => (
+  <Layout className="Files">
+    <Spin size="large" spinning={loading}>
+      <Content className="Files-content">
+        <div className="Files-breadcrumbs">
+          {renderBreadcrumbs(breadcrumbs, onBreadcrumb)}
+        </div>
+        {!files.length
+          ? renderEmpty(account)
+          : (
+              <DragAndDrop.Provider>
+                <Table
+                  columns={columns}
+                  components={components(onMove)}
+                  dataSource={filesForAccount(account, files)}
+                  onRow={({ name, type }, i) => ({
+                    i,
+                    onClick: () => type === 'folder' && onNavigate(name, i),
+                    type
+                  })}
+                  rowKey={({ id }) => id}
+                  size="middle"
+                  pagination={false}
+                  showHeader={false}
+                />
+              </DragAndDrop.Provider>
+          )
+        }
+      </Content>
+    </Spin>
+  </Layout>
+);
