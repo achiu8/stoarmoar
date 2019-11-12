@@ -19,20 +19,25 @@ class App extends Component {
   };
 
   componentDidMount() {
-    api.get('/api/users/current')
-      .then(user => {
-        if (user.success === false) {
-          return this.setState({ loggedIn: false });
-        }
-
-        this.setState({ user });
-      });
+    this.getCurrentUser();
   }
 
-  handleLogin = ({ token }) =>
-    this.setState({
-      loggedIn: true
-    }, () => saveToken(token));
+  componentDidUpdate(_, prevState) {
+    if (!prevState.loggedIn && this.state.loggedIn) {
+      this.getCurrentUser();
+    }
+  }
+
+  getCurrentUser = () =>
+    api.get('/api/users/current')
+      .then(user => user.success === false
+        ? this.setState({ loggedIn: false })
+        : this.setState({ user }));
+
+  handleLogin = ({ token }) => {
+    saveToken(token);
+    this.setState({ loggedIn: true });
+  };
 
   render() {
     const { loggedIn, user } = this.state;
