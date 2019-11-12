@@ -1,4 +1,7 @@
-const { findFilesByUserAndProvider } = require('../services/account');
+const {
+  findFilesByUserAndProvider,
+  updateFilesForUserAndProvider
+} = require('../services/account');
 const { findOrCreateByEmail } = require('../services/user');
 const { getUser } = require('../services/google');
 const { authUrl, getToken } = require('../utils/google');
@@ -20,8 +23,13 @@ const files = (req, res) =>
   findFilesByUserAndProvider(req.userId, 1)
     .then(([files]) => res.send(files));
 
+const updateFiles = (req, res) =>
+  updateFilesForUserAndProvider(req.userId, 1, req.body)
+    .then(([files]) => res.send(files));
+
 module.exports = {
   auth,
   getAuthUrl,
-  files
+  files,
+  updateFiles
 };
