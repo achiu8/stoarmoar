@@ -11,6 +11,7 @@ import api from './utils/api';
 import { getToken, saveToken } from './utils/auth';
 
 import './styles/App.css';
+import './styles/Droppable.css';
 
 class App extends Component {
   state = {

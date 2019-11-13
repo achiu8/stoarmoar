@@ -50,8 +50,13 @@ const components = onMove => ({
           droppable={type === 'folder'}
           i={i}
           onDrop={onMove}
-          render={droppableProps => (
-            <tr {...rest} {...draggableProps} {...droppableProps}>
+          render={({ dropping, ...droppableProps }) => (
+            <tr
+              {...rest}
+              {...draggableProps}
+              {...droppableProps}
+              className={dropping ? 'Droppable-hovered' : ''}
+            >
               {children}
             </tr>
           )}
