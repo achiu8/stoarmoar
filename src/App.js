@@ -6,6 +6,7 @@ import Header from './Header';
 import Login from './Login';
 import Create from './Create';
 import Home from './Home';
+import Settings from './Settings';
 import GoogleAuth from './GoogleAuth';
 import api from './utils/api';
 import { getToken, saveToken } from './utils/auth';
@@ -53,6 +54,7 @@ class App extends Component {
             <Route exact path="/" render={props => <Home loggedIn={loggedIn} user={user} />} />
             <Route path="/login" render={props => <Login {...props} onLogin={this.handleLogin} />} />
             <Route path="/create" component={Create} />
+            <Route path="/settings" component={Settings} />
             <Route
               path="/google-auth"
               render={props => (
