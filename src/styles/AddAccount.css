@@ -1,0 +1,16 @@
+.account-buttons{
+  border: none;
+}
+
+.grid-item{
+  cursor: pointer;
+  color: #5D5D5D;
+  list-style-type: none;
+  line-height: 1.5;
+
+  transition: color .25s;
+}
+
+.grid-item:hover{
+  color: #1886FA;
+}

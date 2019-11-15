@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Avatar, Col, Dropdown, Layout, Menu, Row } from 'antd';
 
 import './styles/Header.css';
@@ -24,7 +24,7 @@ export default ({ loggedIn, user }) => (
     <Row type="flex" justify="space-between">
       <Col span={5}>
         <span className="atlas"> Atlas    </span>
-        <span className="atlas-motto"> Your map to the clouds </span>
+        <span className="atlas-motto"> your map to the clouds </span>
       </Col>
       <Col span={1}>
       {loggedIn && user && (
