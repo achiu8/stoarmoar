@@ -1,5 +1,5 @@
-import React from 'react';
-import { Col, Icon, Modal, Row, Button } from 'antd';
+ import React from 'react';
+import { Col, Icon, Modal, Row } from 'antd';
 import { Link } from "react-router-dom";
 
 import { chunksOf, accountName } from './utils';

@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from 'antd';
-import './styles/Settings.css';
 
+import './styles/Settings.css';
 
 class Settings extends React.Component {
   constructor(props) {
