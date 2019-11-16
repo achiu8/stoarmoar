@@ -1,6 +1,7 @@
 import React from 'react';
 import { Empty, Layout, Spin } from 'antd';
 
+import DragAndDrop from './DragAndDrop';
 import FilesBreadcrumbs from './FilesBreadcrumbs';
 import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
@@ -30,26 +31,28 @@ export default ({
 }) => (
   <Layout className="Files">
     <Spin size="large" spinning={loading}>
-      <Content className="Files-content">
-        <FilesBreadcrumbs items={breadcrumbs} onClick={onBreadcrumb} />
-        {!files.length
-          ? renderEmpty(account)
-          : layout === LAYOUT.LIST
-            ? <FilesList
-                account={account}
-                files={files}
-                onNavigate={onNavigate}
-                onMove={onMove}
-              />
-            : <FilesGrid
-                account={account}
-                columns={columns}
-                files={files}
-                onNavigate={onNavigate}
-                onMove={onMove}
-              />
-        }
-      </Content>
+      <DragAndDrop.Provider>
+        <Content className="Files-content">
+          <FilesBreadcrumbs items={breadcrumbs} onClick={onBreadcrumb} />
+          {!files.length
+            ? renderEmpty(account)
+            : layout === LAYOUT.LIST
+              ? <FilesList
+                  account={account}
+                  files={files}
+                  onNavigate={onNavigate}
+                  onMove={onMove}
+                />
+              : <FilesGrid
+                  account={account}
+                  columns={columns}
+                  files={files}
+                  onNavigate={onNavigate}
+                  onMove={onMove}
+                />
+          }
+        </Content>
+      </DragAndDrop.Provider>
     </Spin>
   </Layout>
 );

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Col, Icon, Row } from 'antd';
 import classNames from 'classnames';
+import { Col, Icon, Row } from 'antd';
 
 import DragAndDrop from './DragAndDrop';
 import { chunksOf, filename, filesForAccount } from '../utils';
@@ -8,7 +8,7 @@ import { chunksOf, filename, filesForAccount } from '../utils';
 const position = (cs, i, j) => cs * i + j;
 
 export default ({ account, columns, files, onMove, onNavigate }) => (
-  <DragAndDrop.Provider>
+  <>
     {chunksOf(columns, filesForAccount(account, files)).map((row, i) => (
       <Row key={i} className="grid-row" gutter={48}>
         {row.map(({ name, type }, j) => (
@@ -37,5 +37,5 @@ export default ({ account, columns, files, onMove, onNavigate }) => (
         ))}
       </Row>
     ))}
-  </DragAndDrop.Provider>
+  </>
 );

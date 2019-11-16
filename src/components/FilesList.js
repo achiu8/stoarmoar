@@ -42,20 +42,18 @@ const components = onMove => ({
 });
 
 export default ({ account, files, onMove, onNavigate }) => (
-  <DragAndDrop.Provider>
-    <Table
-      columns={columns}
-      components={components(onMove)}
-      dataSource={filesForAccount(account, files)}
-      onRow={({ name, type }, i) => ({
-        i,
-        onClick: () => onNavigate(type, name, i),
-        type
-      })}
-      rowKey={({ id }) => id}
-      size="middle"
-      pagination={false}
-      showHeader={false}
-    />
-  </DragAndDrop.Provider>
+  <Table
+    columns={columns}
+    components={components(onMove)}
+    dataSource={filesForAccount(account, files)}
+    onRow={({ name, type }, i) => ({
+      i,
+      onClick: () => onNavigate(type, name, i),
+      type
+    })}
+    rowKey={({ id }) => id}
+    size="middle"
+    pagination={false}
+    showHeader={false}
+  />
 );
