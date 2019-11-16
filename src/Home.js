@@ -52,7 +52,6 @@ export default class Home extends Component {
     modalOpen: false,
     files: [],
     path: [],
-    view: 'list'
   };
 
   handleModal = modalOpen => () =>
@@ -99,14 +98,15 @@ export default class Home extends Component {
     this.setState({ path: this.state.path.slice(0, i) });
 
   render() {
-    const { account, columns, loading, modalOpen, files, path, view } = this.state;
+    const { layout, loggedIn, user } = this.props;
+    const { account, columns, loading, modalOpen, files, path } = this.state;
 
-    return !this.props.loggedIn
+    return !loggedIn
       ? <Redirect to="/login" />
       : (
         <Layout>
           <Accounts
-            accounts={accounts(this.props.user)}
+            accounts={accounts(user)}
             onAddAccountClick={this.handleModal(true)}
             onFetch={this.handleFetch}
           />
@@ -115,11 +115,11 @@ export default class Home extends Component {
             breadcrumbs={breadcrumbs(path)}
             columns={columns}
             files={getIn(path, files)}
+            layout={layout}
             loading={loading}
             onBreadcrumb={this.handleBreadcrumb}
             onMove={this.handleMove}
             onNavigate={this.handleNavigate}
-            view={view}
           />
           <AddAccount
             visible={modalOpen}

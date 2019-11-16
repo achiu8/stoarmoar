@@ -6,7 +6,7 @@ import Header from './Header';
 import Login from './Login';
 import Create from './Create';
 import Home from './Home';
-import Settings from './Settings';
+import Settings, { LAYOUT } from './Settings';
 import GoogleAuth from './GoogleAuth';
 import api from './utils/api';
 import { getToken, saveToken } from './utils/auth';
@@ -16,6 +16,7 @@ import './styles/Droppable.css';
 
 class App extends Component {
   state = {
+    layout: LAYOUT.LIST,
     loggedIn: getToken(),
     user: null
   };
@@ -41,8 +42,11 @@ class App extends Component {
     this.setState({ loggedIn: true });
   };
 
+  handleSetLayout = layout => () =>
+    this.setState({ layout });
+
   render() {
-    const { loggedIn, user } = this.state;
+    const { layout, loggedIn, user } = this.state;
 
     return (
       <Router>
@@ -51,10 +55,18 @@ class App extends Component {
             Atlas
           </Header>
           <Layout>
-            <Route exact path="/" render={props => <Home loggedIn={loggedIn} user={user} />} />
+            <Route exact path="/" render={props => <Home layout={layout} loggedIn={loggedIn} user={user} />} />
             <Route path="/login" render={props => <Login {...props} onLogin={this.handleLogin} />} />
             <Route path="/create" component={Create} />
-            <Route path="/settings" component={Settings} />
+            <Route
+              path="/settings"
+              render={props => (
+                <Settings
+                  {...props}
+                  layout={layout}
+                  onSetLayout={this.handleSetLayout}
+                />
+              )} />
             <Route
               path="/google-auth"
               render={props => (

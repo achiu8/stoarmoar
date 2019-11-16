@@ -2,6 +2,11 @@ import React from 'react';
 
 import './styles/Settings.css';
 
+export const LAYOUT = {
+  GRID: 'grid',
+  LIST: 'list',
+};
+
 class Settings extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +37,7 @@ class Settings extends React.Component {
   }
 
   getLayoutByClass(layoutByOption) {
-    if(layoutByOption === this.state.layoutBy) {
+    if(layoutByOption === this.props.layout) {
       return 'active';
     }
     return '';
@@ -41,10 +46,6 @@ class Settings extends React.Component {
 
   handleScaleByChange(scaleByOption){
     this.setState({ scaleBy: scaleByOption})
-  }
-
-  handleLayoutByChange(layoutByOption){
-    this.setState({ layoutBy: layoutByOption})
   }
 
   renderScaleByOptions() {
@@ -64,7 +65,7 @@ class Settings extends React.Component {
       Object.keys(this.layoutByOptions).map(layoutByOption => {
         let layoutByOptionValue = this.layoutByOptions[layoutByOption];
         return <li key={layoutByOptionValue}
-        onClick={this.handleLayoutByChange.bind(this, layoutByOptionValue)}
+        onClick={this.props.onSetLayout(layoutByOptionValue)}
         className={this.getLayoutByClass(layoutByOptionValue)}> {layoutByOption} </li>;
       })
     )

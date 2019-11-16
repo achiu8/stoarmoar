@@ -3,6 +3,7 @@ import { Breadcrumb, Empty, Layout, Spin } from 'antd';
 
 import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
+import { LAYOUT } from './Settings';
 
 import './styles/Files.css';
 
@@ -34,11 +35,11 @@ export default ({
   columns,
   breadcrumbs,
   files,
+  layout,
   loading,
   onNavigate,
   onBreadcrumb,
   onMove,
-  view
 }) => (
   <Layout className="Files">
     <Spin size="large" spinning={loading}>
@@ -48,16 +49,16 @@ export default ({
         </div>
         {!files.length
           ? renderEmpty(account)
-          : view === 'list'
-            ? <FilesGrid
+          : layout === LAYOUT.LIST
+            ? <FilesList
                 account={account}
-                columns={columns}
                 files={files}
                 onNavigate={onNavigate}
                 onMove={onMove}
               />
-            : <FilesList
+            : <FilesGrid
                 account={account}
+                columns={columns}
                 files={files}
                 onNavigate={onNavigate}
                 onMove={onMove}
