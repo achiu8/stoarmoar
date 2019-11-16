@@ -46,13 +46,17 @@ const move = (from, to) => files =>
 
 export default class Home extends Component {
   state = {
-    account: null,
+    account: 'google',
     columns: 8,
     loading: false,
     modalOpen: false,
     files: [],
     path: [],
   };
+
+  componentDidMount() {
+    this.handleFetch(this.state.account)();
+  }
 
   handleModal = modalOpen => () =>
     this.setState({ modalOpen });
