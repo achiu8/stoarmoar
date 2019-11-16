@@ -10,10 +10,7 @@ const initials = ({ firstName, lastName }) =>
 const menu = (
   <Menu>
     <Menu.Item>
-      <Link to="/" > Home </Link>
-    </Menu.Item>
-    <Menu.Item>
-      <Link to="/settings" > Settings </Link>
+      <Link to="/settings">Settings</Link>
     </Menu.Item>
     <Menu.Item>Log out</Menu.Item>
   </Menu>
@@ -23,8 +20,10 @@ export default ({ loggedIn, user }) => (
   <Layout.Header>
     <Row type="flex" justify="space-between">
       <Col span={5}>
-        <span className="atlas"> Atlas    </span>
-        <span className="atlas-motto"> your map to the clouds </span>
+        <Link to="/">
+          <span className="atlas">Atlas</span>
+        </Link>>
+        <span className="atlas-motto">your map to the clouds</span>
       </Col>
       <Col span={1}>
       {loggedIn && user && (
