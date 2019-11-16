@@ -47,10 +47,12 @@ const move = (from, to) => files =>
 export default class Home extends Component {
   state = {
     account: null,
+    columns: 8,
     loading: false,
     modalOpen: false,
     files: [],
-    path: []
+    path: [],
+    view: 'list'
   };
 
   handleModal = modalOpen => () =>
@@ -85,8 +87,8 @@ export default class Home extends Component {
       )
     }, this.handleUpdate);
 
-  handleNavigate = (name, i) =>
-    this.setState({
+  handleNavigate = (type, name, i) =>
+    type === 'folder' && this.setState({
       path: [
         ...this.state.path,
         { name, i }
@@ -97,7 +99,7 @@ export default class Home extends Component {
     this.setState({ path: this.state.path.slice(0, i) });
 
   render() {
-    const { account, loading, modalOpen, files, path } = this.state;
+    const { account, columns, loading, modalOpen, files, path, view } = this.state;
 
     return !this.props.loggedIn
       ? <Redirect to="/login" />
@@ -111,11 +113,13 @@ export default class Home extends Component {
           <Files
             account={account}
             breadcrumbs={breadcrumbs(path)}
+            columns={columns}
             files={getIn(path, files)}
             loading={loading}
             onBreadcrumb={this.handleBreadcrumb}
             onMove={this.handleMove}
             onNavigate={this.handleNavigate}
+            view={view}
           />
           <AddAccount
             visible={modalOpen}

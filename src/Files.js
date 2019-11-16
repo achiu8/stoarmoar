@@ -1,6 +1,7 @@
 import React from 'react';
 import { Breadcrumb, Empty, Layout, Spin } from 'antd';
 
+import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
 
 import './styles/Files.css';
@@ -28,7 +29,17 @@ const renderEmpty = account => (
   />
 );
 
-export default ({ account, breadcrumbs, files, loading, onNavigate, onBreadcrumb, onMove }) => (
+export default ({
+  account,
+  columns,
+  breadcrumbs,
+  files,
+  loading,
+  onNavigate,
+  onBreadcrumb,
+  onMove,
+  view
+}) => (
   <Layout className="Files">
     <Spin size="large" spinning={loading}>
       <Content className="Files-content">
@@ -37,14 +48,20 @@ export default ({ account, breadcrumbs, files, loading, onNavigate, onBreadcrumb
         </div>
         {!files.length
           ? renderEmpty(account)
-          : (
-              <FilesList
+          : view === 'list'
+            ? <FilesGrid
+                account={account}
+                columns={columns}
+                files={files}
+                onNavigate={onNavigate}
+                onMove={onMove}
+              />
+            : <FilesList
                 account={account}
                 files={files}
                 onNavigate={onNavigate}
                 onMove={onMove}
               />
-          )
         }
       </Content>
     </Spin>

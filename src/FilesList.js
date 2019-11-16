@@ -49,7 +49,7 @@ export default ({ account, files, onMove, onNavigate }) => (
       dataSource={filesForAccount(account, files)}
       onRow={({ name, type }, i) => ({
         i,
-        onClick: () => type === 'folder' && onNavigate(name, i),
+        onClick: () => onNavigate(type, name, i),
         type
       })}
       rowKey={({ id }) => id}
