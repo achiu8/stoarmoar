@@ -28,12 +28,17 @@ export default ({
   onNavigate,
   onBreadcrumb,
   onMove,
+  onMoveLevel,
 }) => (
   <Layout className="Files">
     <Spin size="large" spinning={loading}>
       <DragAndDrop.Provider>
         <Content className="Files-content">
-          <FilesBreadcrumbs items={breadcrumbs} onClick={onBreadcrumb} />
+          <FilesBreadcrumbs
+            items={breadcrumbs}
+            onClick={onBreadcrumb}
+            onMoveLevel={onMoveLevel}
+          />
           {!files.length
             ? renderEmpty(account)
             : layout === LAYOUT.LIST

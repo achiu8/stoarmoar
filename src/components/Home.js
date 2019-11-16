@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 import {
-  path as getPath,
+  append,
   compose,
   flatten,
   lensPath,
   over,
+  path as getPath,
   pluck,
   prop,
   repeat,
@@ -43,6 +44,18 @@ const move = (from, to) => files =>
       ? { ...file, files: [...file.files, files[from]] }
       : file)
     .filter((_, i) => i !== from);
+
+const remove = from => files =>
+  files.filter((_, i) => i !== from);
+
+const moveLevel = (from, to, path, files) => {
+  const file = getIn(path, files)[from];
+
+  return compose(
+    over(lensPath(buildPath(path.slice(0, to))), append(file)),
+    over(lensPath(buildPath(path)), remove(from))
+  )(files);
+};
 
 export default class Home extends Component {
   state = {
@@ -90,6 +103,11 @@ export default class Home extends Component {
       )
     }, this.handleUpdate);
 
+  handleMoveLevel = (from, to) =>
+    this.setState({
+      files: moveLevel(from, to, this.state.path, this.state.files)
+    }, this.handleUpdate);
+
   handleNavigate = (type, name, i) =>
     type === 'folder' && this.setState({
       path: [
@@ -123,6 +141,7 @@ export default class Home extends Component {
             loading={loading}
             onBreadcrumb={this.handleBreadcrumb}
             onMove={this.handleMove}
+            onMoveLevel={this.handleMoveLevel}
             onNavigate={this.handleNavigate}
           />
           <AddAccount

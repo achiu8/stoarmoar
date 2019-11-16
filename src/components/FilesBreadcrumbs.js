@@ -4,14 +4,14 @@ import { Breadcrumb } from 'antd';
 
 import DragAndDrop from './DragAndDrop';
 
-export default ({ items, onClick }) => (
+export default ({ items, onClick, onMoveLevel }) => (
   <div className="Files-breadcrumbs">
     <Breadcrumb separator=">">
       {['My Files', ...items].map((item, i) => (
         <DragAndDrop.Droppable
           droppable={i !== items.length}
           i={i}
-          onDrop={() => console.log('dropped on', item)}
+          onDrop={onMoveLevel}
           render={({ dropping, ...droppableProps }) => (
             <Breadcrumb.Item
               {...droppableProps}
