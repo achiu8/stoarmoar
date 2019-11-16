@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Avatar, Col, Dropdown, Layout, Menu, Row } from 'antd';
 
-import './styles/Header.css';
+import '../styles/Header.css';
 
 const initials = ({ firstName, lastName }) =>
   `${firstName[0]}${lastName[0]}`;

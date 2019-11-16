@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import qs from 'qs';
 
-import api from './utils/api';
+import api from '../utils/api';
 
 class DropboxAuth extends Component {
   componentDidMount() {

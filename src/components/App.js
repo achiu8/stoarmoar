@@ -8,11 +8,11 @@ import Create from './Create';
 import Home from './Home';
 import Settings, { LAYOUT } from './Settings';
 import GoogleAuth from './GoogleAuth';
-import api from './utils/api';
-import { getToken, saveToken } from './utils/auth';
+import api from '../utils/api';
+import { getToken, saveToken } from '../utils/auth';
 
-import './styles/App.css';
-import './styles/Droppable.css';
+import '../styles/App.css';
+import '../styles/Droppable.css';
 
 class App extends Component {
   state = {

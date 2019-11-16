@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './styles/Settings.css';
+import '../styles/Settings.css';
 
 export const LAYOUT = {
   GRID: 'grid',

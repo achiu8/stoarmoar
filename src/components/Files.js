@@ -5,7 +5,7 @@ import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
 import { LAYOUT } from './Settings';
 
-import './styles/Files.css';
+import '../styles/Files.css';
 
 const Content = Layout.Content;
 

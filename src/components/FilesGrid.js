@@ -3,7 +3,7 @@ import { Col, Icon, Row } from 'antd';
 import classNames from 'classnames';
 
 import DragAndDrop from './DragAndDrop';
-import { chunksOf, filename, filesForAccount } from './utils';
+import { chunksOf, filename, filesForAccount } from '../utils';
 
 const position = (cs, i, j) => cs * i + j;
 

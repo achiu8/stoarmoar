@@ -16,9 +16,9 @@ import {
 import Accounts from './Accounts';
 import AddAccount from './AddAccount';
 import Files from './Files';
-import api from './utils/api';
+import api from '../utils/api';
 
-import './styles/Home.css';
+import '../styles/Home.css';
 
 const buildPath = path =>
   compose(

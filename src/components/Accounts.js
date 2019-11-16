@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Icon, Layout, Menu } from 'antd';
 
-import './styles/Accounts.css';
+import '../styles/Accounts.css';
 
-import { accountName } from './utils';
+import { accountName } from '../utils';
 
 const Sider = Layout.Sider;
 

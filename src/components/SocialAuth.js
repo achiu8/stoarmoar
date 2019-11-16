@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import api from './utils/api';
+import api from '../utils/api';
 
 class SocialAuth extends Component {
   state = {

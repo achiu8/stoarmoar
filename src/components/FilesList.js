@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, Table } from 'antd';
 
 import DragAndDrop from './DragAndDrop';
-import { filesForAccount } from './utils';
+import { filesForAccount } from '../utils';
 
 const columns = [
   {

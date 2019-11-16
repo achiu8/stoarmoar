@@ -2,10 +2,10 @@
 import { Col, Icon, Modal, Row } from 'antd';
 import { Link } from "react-router-dom";
 
-import { chunksOf, accountName } from './utils';
-import accountTypes from './utils/account_types';
+import { chunksOf, accountName } from '../utils';
+import accountTypes from '../utils/account_types';
 
-import './styles/AddAccount.css';
+import '../styles/AddAccount.css';
 
 export default props => (
   <Modal title="Add Account" footer={null} {...props}>
