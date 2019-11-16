@@ -1,6 +1,7 @@
 import React from 'react';
-import { Breadcrumb, Empty, Layout, Spin } from 'antd';
+import { Empty, Layout, Spin } from 'antd';
 
+import FilesBreadcrumbs from './FilesBreadcrumbs';
 import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
 import { LAYOUT } from './Settings';
@@ -8,20 +9,6 @@ import { LAYOUT } from './Settings';
 import '../styles/Files.css';
 
 const Content = Layout.Content;
-
-const renderBreadcrumbs = (breadcrumbs, onClick) => (
-  <Breadcrumb separator=">">
-    {['My Files', ...breadcrumbs].map((breadcrumb, i) => (
-      <Breadcrumb.Item
-        key={i}
-        className="Files-breadcrumb"
-        onClick={() => onClick(i)}
-      >
-        {breadcrumb}
-      </Breadcrumb.Item>
-    ))}
-  </Breadcrumb>
-);
 
 const renderEmpty = account => (
   <Empty
@@ -44,9 +31,7 @@ export default ({
   <Layout className="Files">
     <Spin size="large" spinning={loading}>
       <Content className="Files-content">
-        <div className="Files-breadcrumbs">
-          {renderBreadcrumbs(breadcrumbs, onBreadcrumb)}
-        </div>
+        <FilesBreadcrumbs items={breadcrumbs} onClick={onBreadcrumb} />
         {!files.length
           ? renderEmpty(account)
           : layout === LAYOUT.LIST
