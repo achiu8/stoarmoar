@@ -9,6 +9,7 @@ import {
   over,
   path as getPath,
   pluck,
+  prepend,
   prop,
   repeat,
   zip
@@ -115,6 +116,19 @@ export default class Home extends Component {
       ]
     });
 
+  handleNewFolder = (name, cb) =>
+    this.setState({
+      files: updateIn(this.state.path, prepend({
+        id: `atlas-${Math.floor(Math.random() * 1000000)}`,
+        name,
+        files: [],
+        type: 'folder'
+      }))(this.state.files)
+    }, () => {
+      cb();
+      this.handleUpdate();
+    });
+
   handleBreadcrumb = i =>
     this.setState({ path: this.state.path.slice(0, i) });
 
@@ -142,6 +156,7 @@ export default class Home extends Component {
             onMove={this.handleMove}
             onMoveLevel={this.handleMoveLevel}
             onNavigate={this.handleNavigate}
+            onNewFolder={this.handleNewFolder}
           />
           <AddAccount
             visible={modalOpen}

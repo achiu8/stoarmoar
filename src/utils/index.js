@@ -42,5 +42,5 @@ export const filesForAccount = (accountType, files) =>
     id: file.id,
     name: file.name,
     files: file.files,
-    type: accountTypes[accountType](file) || 'file'
+    type: file.type || accountTypes[accountType](file) || 'file'
   }));

@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import { Col, Icon, Modal, Row } from 'antd';
 import { Link } from "react-router-dom";
 

@@ -1,10 +1,11 @@
-import React from 'react';
-import { Empty, Layout, Spin } from 'antd';
+import React, { useState } from 'react';
+import { Button, Empty, Layout, Row, Spin } from 'antd';
 
 import DragAndDrop from './DragAndDrop';
 import FilesBreadcrumbs from './FilesBreadcrumbs';
 import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
+import NewFolder from './NewFolder';
 import { LAYOUT } from './Settings';
 
 import '../styles/Files.css';
@@ -29,35 +30,50 @@ export default ({
   onBreadcrumb,
   onMove,
   onMoveLevel,
-}) => (
-  <Layout className="Files">
-    <Spin size="large" spinning={loading}>
-      <DragAndDrop.Provider>
-        <Content className="Files-content">
-          <FilesBreadcrumbs
-            items={breadcrumbs}
-            onClick={onBreadcrumb}
-            onMoveLevel={onMoveLevel}
-          />
-          {!files.length
-            ? renderEmpty(account)
-            : layout === LAYOUT.LIST
-              ? <FilesList
-                  account={account}
-                  files={files}
-                  onNavigate={onNavigate}
-                  onMove={onMove}
-                />
-              : <FilesGrid
-                  account={account}
-                  columns={columns}
-                  files={files}
-                  onNavigate={onNavigate}
-                  onMove={onMove}
-                />
-          }
-        </Content>
-      </DragAndDrop.Provider>
-    </Spin>
-  </Layout>
-);
+  onNewFolder,
+}) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  return (
+    <Layout className="Files">
+      <Spin size="large" spinning={loading}>
+        <DragAndDrop.Provider>
+          <Content className="Files-content">
+            <Row type="flex" justify="space-between">
+              <FilesBreadcrumbs
+                items={breadcrumbs}
+                onClick={onBreadcrumb}
+                onMoveLevel={onMoveLevel}
+              />
+              <Button onClick={() => setModalOpen(true)}>
+                <span>New Folder</span>
+              </Button>
+            </Row>
+            {!files.length
+              ? renderEmpty(account)
+              : layout === LAYOUT.LIST
+                ? <FilesList
+                    account={account}
+                    files={files}
+                    onNavigate={onNavigate}
+                    onMove={onMove}
+                  />
+                : <FilesGrid
+                    account={account}
+                    columns={columns}
+                    files={files}
+                    onNavigate={onNavigate}
+                    onMove={onMove}
+                  />
+            }
+          </Content>
+        </DragAndDrop.Provider>
+      </Spin>
+      <NewFolder
+        visible={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        onCreate={onNewFolder}
+      />
+    </Layout>
+  );
+};
