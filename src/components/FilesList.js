@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Table } from 'antd';
+import { Icon, Table, Menu, Dropdown } from 'antd';
 
 import DragAndDrop from './DragAndDrop';
 import { filesForAccount } from '../utils';
@@ -17,6 +17,23 @@ const columns = [
   }
 ];
 
+const {SubMenu} = Menu;
+
+const menu = (
+  <Menu>
+    <Menu.Item key="1">Download</Menu.Item>
+    <SubMenu
+      key="sub2"
+      title={
+        <span>Cloud Preference</span>
+      }
+    >
+      <Menu.Item key="1">Google</Menu.Item>
+      <Menu.Item key="2">Dropbox</Menu.Item>
+    </SubMenu>
+  </Menu>
+);
+
 const components = onMove => ({
   body: {
     row: ({ children, i, type, ...rest }) => (
@@ -26,14 +43,17 @@ const components = onMove => ({
           i={i}
           onDrop={onMove}
           render={({ dropping, ...droppableProps }) => (
-            <tr
-              {...rest}
-              {...draggableProps}
-              {...droppableProps}
-              className={dropping ? 'Droppable-hovered' : ''}
-            >
-              {children}
-            </tr>
+            <Dropdown overlay={menu} trigger={['contextMenu']} >
+              <tr
+                {...rest}
+                {...draggableProps}
+                {...droppableProps}
+                className={dropping ? 'Droppable-hovered' : ''}
+                style={{ userSelect: 'none' }}
+              >
+                {children}
+              </tr>
+            </Dropdown>
           )}
         />
       )} />

@@ -1,11 +1,32 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Col, Icon, Row } from 'antd';
+import { Col, Icon, Row, Menu, Dropdown } from 'antd';
 
 import DragAndDrop from './DragAndDrop';
 import { chunksOf, filename, filesForAccount } from '../utils';
 
 const position = (cs, i, j) => cs * i + j;
+
+const {SubMenu} = Menu;
+
+const menu = (
+  <Menu>
+    <Menu.Item key="1">Download</Menu.Item>
+    <SubMenu
+      key="sub2"
+      title={
+        <span>Cloud Preference</span>
+      }
+    >
+      <Menu.Item key="1">Google</Menu.Item>
+      <Menu.Item key="2">Dropbox</Menu.Item>
+    </SubMenu>
+  </Menu>
+);
+
+function handleClick(e) {
+  console.log('click', e);
+}
 
 export default ({ account, columns, files, onMove, onNavigate }) => (
   <>
@@ -19,17 +40,21 @@ export default ({ account, columns, files, onMove, onNavigate }) => (
                 i={position(columns, i, j)}
                 onDrop={onMove}
                 render={({ dropping, ...droppableProps }) => (
-                  <div
-                    {...draggableProps}
-                    {...droppableProps}
-                    className={classNames('grid-item', {
-                      'Droppable-hovered': dropping
-                    })}
-                    onClick={() => onNavigate(type, name, position(columns, i, j))}
-                  >
-                    <Icon className="grid-item-icon" type={type} />
-                    <span>{filename(name)}</span>
-                  </div>
+                  <Dropdown overlay={menu} trigger={['contextMenu']}>
+                    <div style={{ userSelect: 'none' }}>
+                      <div
+                        {...draggableProps}
+                        {...droppableProps}
+                        className={classNames('grid-item', {
+                          'Droppable-hovered': dropping
+                        })}
+                        onClick={() => onNavigate(type, name, position(columns, i, j))}
+                      >
+                        <Icon className="grid-item-icon" type={type} />
+                        <span>{filename(name)}</span>
+                      </div>
+                    </div>
+                  </Dropdown>
                 )}
               />
            )} />
