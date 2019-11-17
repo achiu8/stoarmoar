@@ -4,7 +4,7 @@ const DragAndDropContext = createContext();
 
 const Provider = ({ children }) => {
   const [dragging, setDragging] = useState(null);
-  const [dropping, setDropping] = useState(null);
+  const [dropping, setDropping] = useState({});
 
   return (
     <DragAndDropContext.Provider value={{
@@ -25,22 +25,22 @@ const Draggable = ({ i, render }) => {
     draggable: true,
     onDragEnd: () => {
       setDragging(null);
-      setDropping(null);
+      setDropping({});
     },
     onDragStart: () => setDragging(i)
   });
 };
 
-const Droppable = ({ droppable, i, onDrop, render }) => {
+const Droppable = ({ droppable, i, onDrop, render, type }) => {
   const { dragging, dropping, setDropping } = useContext(DragAndDropContext);
 
   return render({
-    dropping: droppable && dropping === i,
+    dropping: droppable && dropping.i === i && dropping.type === type,
     onDragOver: e => e.preventDefault(),
-    onDragEnter: () => setDropping(i),
+    onDragEnter: () => setDropping({ i, type }),
     onDrop: () => {
       droppable && dragging !== null && onDrop(dragging, i);
-      setDropping(null);
+      setDropping({});
     }
   });
 };

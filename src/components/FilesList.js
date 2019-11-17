@@ -25,6 +25,7 @@ const components = onMove => ({
           droppable={type === 'folder'}
           i={i}
           onDrop={onMove}
+          type="file"
           render={({ dropping, ...droppableProps }) => (
             <tr
               {...rest}

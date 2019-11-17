@@ -18,6 +18,7 @@ export default ({ account, columns, files, onMove, onNavigate }) => (
                 droppable={type === 'folder'}
                 i={position(columns, i, j)}
                 onDrop={onMove}
+                type="file"
                 render={({ dropping, ...droppableProps }) => (
                   <div
                     {...draggableProps}

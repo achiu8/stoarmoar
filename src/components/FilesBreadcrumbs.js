@@ -13,6 +13,7 @@ export default ({ items, onClick, onMoveLevel }) => (
           droppable={i !== items.length}
           i={i}
           onDrop={onMoveLevel}
+          type="breadcrumb"
           render={({ dropping, ...droppableProps }) => (
             <Breadcrumb.Item
               {...droppableProps}
