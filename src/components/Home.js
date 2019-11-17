@@ -48,12 +48,15 @@ const move = (from, to) => files =>
 const remove = from => files =>
   files.filter((_, i) => i !== from);
 
+const updateIn = (path, f) =>
+  over(lensPath(buildPath(path)), f);
+
 const moveLevel = (from, to, path, files) => {
   const file = getIn(path, files)[from];
 
   return compose(
-    over(lensPath(buildPath(path.slice(0, to))), append(file)),
-    over(lensPath(buildPath(path)), remove(from))
+    updateIn(path.slice(0, to), append(file)),
+    updateIn(path, remove(from))
   )(files);
 };
 
@@ -96,11 +99,7 @@ export default class Home extends Component {
 
   handleMove = (from, to) =>
     from !== to && this.setState({
-      files: over(
-        lensPath(buildPath(this.state.path)),
-        move(from, to),
-        this.state.files
-      )
+      files: updateIn(this.state.path, move(from, to))(this.state.files)
     }, this.handleUpdate);
 
   handleMoveLevel = (from, to) =>

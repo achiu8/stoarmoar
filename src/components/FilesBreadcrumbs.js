@@ -9,6 +9,7 @@ export default ({ items, onClick, onMoveLevel }) => (
     <Breadcrumb separator=">">
       {['My Files', ...items].map((item, i) => (
         <DragAndDrop.Droppable
+          key={i}
           droppable={i !== items.length}
           i={i}
           onDrop={onMoveLevel}
