@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Breadcrumb } from 'antd';
 
-import DragAndDrop from './DragAndDrop';
+import DragAndDrop from '../contexts/DragAndDrop';
 
 export default ({ items, onClick, onMoveLevel }) => (
   <div className="Files-breadcrumbs">

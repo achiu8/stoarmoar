@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, Table } from 'antd';
 
-import DragAndDrop from './DragAndDrop';
+import DragAndDrop from '../contexts/DragAndDrop';
 import { filesForAccount } from '../utils';
 
 const columns = [

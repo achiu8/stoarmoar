@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Col, Icon, Row } from 'antd';
 
-import DragAndDrop from './DragAndDrop';
+import DragAndDrop from '../contexts/DragAndDrop';
 import { chunksOf, filename, filesForAccount } from '../utils';
 
 const position = (cs, i, j) => cs * i + j;

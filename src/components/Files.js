@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Empty, Layout, Row, Spin } from 'antd';
 
-import DragAndDrop from './DragAndDrop';
+import DragAndDrop from '../contexts/DragAndDrop';
 import FilesBreadcrumbs from './FilesBreadcrumbs';
 import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
