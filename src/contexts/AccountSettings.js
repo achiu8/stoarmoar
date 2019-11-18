@@ -5,19 +5,20 @@ export const LAYOUT = {
   LIST: 'list',
 };
 
-const AccountSettingsContext = createContext();
+const Context = createContext();
 
 const Provider = ({ children }) => {
   const [layout, setLayout] = useState(LAYOUT.LIST);
 
   return (
-    <AccountSettingsContext.Provider value={{ layout, setLayout }}>
+    <Context.Provider value={{ layout, setLayout }}>
       {children}
-    </AccountSettingsContext.Provider>
+    </Context.Provider>
   );
 };
 
 export default {
+  Context,
   Provider,
-  Consumer: AccountSettingsContext.Consumer
+  Consumer: Context.Consumer
 };

@@ -1,11 +1,8 @@
 import React from 'react';
 
-import '../styles/Settings.css';
+import AccountSettings from '../contexts/AccountSettings';
 
-export const LAYOUT = {
-  GRID: 'grid',
-  LIST: 'list',
-};
+import '../styles/Settings.css';
 
 class Settings extends React.Component {
   constructor(props) {
@@ -36,8 +33,8 @@ class Settings extends React.Component {
     return '';
   }
 
-  getLayoutByClass(layoutByOption) {
-    if(layoutByOption === this.props.layout) {
+  getLayoutByClass(layout, layoutByOption) {
+    if (layoutByOption === layout) {
       return 'active';
     }
     return '';
@@ -59,39 +56,41 @@ class Settings extends React.Component {
     )
   }
 
-
-  renderlayoutByOptions() {
+  renderlayoutByOptions({ layout, setLayout }) {
     return (
       Object.keys(this.layoutByOptions).map(layoutByOption => {
         let layoutByOptionValue = this.layoutByOptions[layoutByOption];
         return <li key={layoutByOptionValue}
-        onClick={this.props.onSetLayout(layoutByOptionValue)}
-        className={this.getLayoutByClass(layoutByOptionValue)}> {layoutByOption} </li>;
+        onClick={() => setLayout(layoutByOptionValue)}
+        className={this.getLayoutByClass(layout, layoutByOptionValue)}> {layoutByOption} </li>;
       })
     )
   }
 
   render() {
-    return(
-      <div>
-        <div className="Settings App-content">
-          <div className="scale-By-Options">
-            <ul>
-              {this.renderScaleByOptions()}
-            </ul>
-          </div>
-        </div>
-        <div className="style-By-Options">
-          <ul>
-            {this.renderlayoutByOptions()}
-          </ul>
-        </div>
-        <div className="Donate">
-          <a href="www.#.com">Donate</a>
-        </div>
-      </div>
-
-    )
+    return (
+      <AccountSettings.Consumer>
+        {settings => (
+          <>
+            <div className="Settings App-content">
+              <div className="scale-By-Options">
+                <ul>
+                  {this.renderScaleByOptions()}
+                </ul>
+              </div>
+            </div>
+            <div className="style-By-Options">
+              <ul>
+                {this.renderlayoutByOptions(settings)}
+              </ul>
+            </div>
+            <div className="Donate">
+              <a href="www.#.com">Donate</a>
+            </div>
+          </>
+        )}
+      </AccountSettings.Consumer>
+    );
   }
 }
 

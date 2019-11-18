@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Empty, Layout, Row, Spin } from 'antd';
 
+import AccountSettings, { LAYOUT } from '../contexts/AccountSettings';
 import DragAndDrop from '../contexts/DragAndDrop';
 import FilesBreadcrumbs from './FilesBreadcrumbs';
 import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
 import NewFolder from './NewFolder';
-import { LAYOUT } from './Settings';
 
 import '../styles/Files.css';
 
@@ -24,7 +24,6 @@ export default ({
   columns,
   breadcrumbs,
   files,
-  layout,
   loading,
   onNavigate,
   onBreadcrumb,
@@ -32,6 +31,7 @@ export default ({
   onMoveLevel,
   onNewFolder,
 }) => {
+  const { layout } = useContext(AccountSettings.Context);
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
