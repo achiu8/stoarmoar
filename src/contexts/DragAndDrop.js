@@ -1,25 +1,25 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const DragAndDropContext = createContext();
+const Context = createContext();
 
 const Provider = ({ children }) => {
   const [dragging, setDragging] = useState(null);
   const [dropping, setDropping] = useState({});
 
   return (
-    <DragAndDropContext.Provider value={{
+    <Context.Provider value={{
       dragging,
       setDragging,
       dropping,
       setDropping
     }}>
       {children}
-    </DragAndDropContext.Provider>
+    </Context.Provider>
   );
 };
 
 const Draggable = ({ i, render }) => {
-  const { setDragging, setDropping } = useContext(DragAndDropContext);
+  const { setDragging, setDropping } = useContext(Context);
 
   return render({
     draggable: true,
@@ -32,7 +32,7 @@ const Draggable = ({ i, render }) => {
 };
 
 const Droppable = ({ droppable, i, onDrop, render, type }) => {
-  const { dragging, dropping, setDropping } = useContext(DragAndDropContext);
+  const { dragging, dropping, setDropping } = useContext(Context);
 
   return render({
     dropping: droppable && dropping.i === i && dropping.type === type,
