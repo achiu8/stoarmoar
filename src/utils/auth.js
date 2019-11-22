@@ -5,3 +5,6 @@ export const getToken = () =>
 
 export const saveToken = token =>
   localStorage.setItem(KEY, token);
+
+export const clearToken = () =>
+  localStorage.removeItem(KEY);

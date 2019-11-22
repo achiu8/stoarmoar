@@ -9,17 +9,17 @@ import '../styles/Header.css';
 const initials = ({ firstName, lastName }) =>
   `${firstName[0]}${lastName[0]}`;
 
-const menu = (
+const menu = onLogout => (
   <Menu>
     <Menu.Item>
       <Link to="/settings">Settings</Link>
     </Menu.Item>
-    <Menu.Item>Log out</Menu.Item>
+    <Menu.Item onClick={onLogout}>Log out</Menu.Item>
   </Menu>
 );
 
 export default () => {
-  const { loggedIn, user } = useContext(Auth.Context);
+  const { onLogout, loggedIn, user } = useContext(Auth.Context);
 
   return (
     <Layout.Header>
@@ -32,7 +32,7 @@ export default () => {
         </Col>
         <Col>
           {loggedIn && user && (
-            <Dropdown placement="bottomRight" overlay={menu}>
+            <Dropdown placement="bottomRight" overlay={menu(onLogout)}>
               <Avatar className="Header-avatar">{initials(user)}</Avatar>
             </Dropdown>
           )}

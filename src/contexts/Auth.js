@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 
 import api from '../utils/api';
-import { getToken, saveToken } from '../utils/auth';
+import { getToken, saveToken, clearToken } from '../utils/auth';
 
 const Context = createContext();
 
@@ -21,9 +21,16 @@ const Provider = ({ children }) => {
     setLoggedIn(true);
   };
 
+  const onLogout = () => {
+    clearToken();
+    setLoggedIn(false);
+    setUser(null);
+  };
+
   return (
     <Context.Provider value={{
       onLogin,
+      onLogout,
       loggedIn,
       setLoggedIn,
       user,
