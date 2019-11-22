@@ -6,6 +6,7 @@ import DragAndDrop from '../contexts/DragAndDrop';
 import FilesBreadcrumbs from './FilesBreadcrumbs';
 import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
+import LayoutSelect from './LayoutSelect';
 import NewFolder from './NewFolder';
 
 import '../styles/Files.css';
@@ -31,7 +32,7 @@ export default ({
   onMoveLevel,
   onNewFolder,
 }) => {
-  const { layout } = useContext(AccountSettings.Context);
+  const { layout, setLayout } = useContext(AccountSettings.Context);
 
   return (
     <Layout className="Files">
@@ -44,7 +45,10 @@ export default ({
                 onClick={onBreadcrumb}
                 onMoveLevel={onMoveLevel}
               />
-              <NewFolder onCreate={onNewFolder} />
+              <div className="Files-actions">
+                <LayoutSelect layout={layout} setLayout={setLayout} />
+                <NewFolder onCreate={onNewFolder} />
+              </div>
             </Row>
             {!files.length
               ? renderEmpty(account)
