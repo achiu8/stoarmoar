@@ -19,18 +19,18 @@ const menu = (
 export default ({ loggedIn, user }) => (
   <Layout.Header>
     <Row type="flex" justify="space-between">
-      <Col span={5}>
+      <Col>
         <Link to="/">
           <span className="atlas">Atlas</span>
         </Link>>
         <span className="atlas-motto">your map to the clouds</span>
       </Col>
-      <Col span={1}>
-      {loggedIn && user && (
-        <Dropdown placement="bottomRight" overlay={menu}>
-          <Avatar>{initials(user)}</Avatar>
-        </Dropdown>
-      )}
+      <Col>
+        {loggedIn && user && (
+          <Dropdown placement="bottomRight" overlay={menu}>
+            <Avatar className="Header-avatar">{initials(user)}</Avatar>
+          </Dropdown>
+        )}
       </Col>
     </Row>
   </Layout.Header>
