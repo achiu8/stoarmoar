@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { Avatar, Col, Dropdown, Layout, Menu, Row } from 'antd';
+
+import Auth from '../contexts/Auth';
 
 import '../styles/Header.css';
 
@@ -16,22 +18,26 @@ const menu = (
   </Menu>
 );
 
-export default ({ loggedIn, user }) => (
-  <Layout.Header>
-    <Row type="flex" justify="space-between">
-      <Col>
-        <Link to="/">
-          <span className="atlas">Atlas</span>
-        </Link>>
-        <span className="atlas-motto">your map to the clouds</span>
-      </Col>
-      <Col>
-        {loggedIn && user && (
-          <Dropdown placement="bottomRight" overlay={menu}>
-            <Avatar className="Header-avatar">{initials(user)}</Avatar>
-          </Dropdown>
-        )}
-      </Col>
-    </Row>
-  </Layout.Header>
-);
+export default () => {
+  const { loggedIn, user } = useContext(Auth.Context);
+
+  return (
+    <Layout.Header>
+      <Row type="flex" justify="space-between">
+        <Col>
+          <Link to="/">
+            <span className="atlas">Atlas</span>
+          </Link>>
+          <span className="atlas-motto">your map to the clouds</span>
+        </Col>
+        <Col>
+          {loggedIn && user && (
+            <Dropdown placement="bottomRight" overlay={menu}>
+              <Avatar className="Header-avatar">{initials(user)}</Avatar>
+            </Dropdown>
+          )}
+        </Col>
+      </Row>
+    </Layout.Header>
+  );
+};
