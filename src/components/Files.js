@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Button, Empty, Layout, Row, Spin } from 'antd';
+import React, { useContext } from 'react';
+import { Empty, Layout, Row, Spin } from 'antd';
 
 import AccountSettings, { LAYOUT } from '../contexts/AccountSettings';
 import DragAndDrop from '../contexts/DragAndDrop';
@@ -32,7 +32,6 @@ export default ({
   onNewFolder,
 }) => {
   const { layout } = useContext(AccountSettings.Context);
-  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <Layout className="Files">
@@ -45,9 +44,7 @@ export default ({
                 onClick={onBreadcrumb}
                 onMoveLevel={onMoveLevel}
               />
-              <Button onClick={() => setModalOpen(true)}>
-                <span>New Folder</span>
-              </Button>
+              <NewFolder onCreate={onNewFolder} />
             </Row>
             {!files.length
               ? renderEmpty(account)
@@ -69,11 +66,6 @@ export default ({
           </Content>
         </DragAndDrop.Provider>
       </Spin>
-      <NewFolder
-        visible={modalOpen}
-        onCancel={() => setModalOpen(false)}
-        onCreate={onNewFolder}
-      />
     </Layout>
   );
 };
