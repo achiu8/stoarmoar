@@ -15,7 +15,7 @@ export default ({ layout, setLayout }) => (
     value={layout}
   >
     {Object.values(LAYOUT).map(type => (
-      <Radio.Button value={type}>
+      <Radio.Button key={type} value={type}>
         <Icon type={ICONS[type]} />
       </Radio.Button>
     ))}
