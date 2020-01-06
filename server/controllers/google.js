@@ -20,7 +20,7 @@ const getAuthUrl = (req, res) =>
   res.send({ url: authUrl() });
 
 const files = (req, res) =>
-  findFilesByUserAndProvider(req.userId, 1)
+  findFilesByUserAndProvider(req.userId, 1, req.query.sync === 'true')
     .then(([files]) => res.send(files));
 
 const updateFiles = (req, res) =>

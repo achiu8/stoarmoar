@@ -7,12 +7,12 @@ const findOrCreateByUserAndProvider = (userId, providerId, token) =>
     defaults: { token }
   });
 
-const findFilesByUserAndProvider = (userId, providerId) =>
+const findFilesByUserAndProvider = (userId, providerId, sync) =>
   Account.findOne({
     where: { userId, providerId }
   })
     .then(account =>
-      account.get('files') ||
+      !sync && account.get('files') ||
         crawlFiles(account.get('token'))
           .then(files => account.update({ files }).then(() => files)));
 

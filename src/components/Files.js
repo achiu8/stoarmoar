@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Empty, Layout, Row, Spin } from 'antd';
+import { Button, Empty, Layout, Row, Spin } from 'antd';
 
 import AccountSettings, { LAYOUT } from '../contexts/AccountSettings';
 import DragAndDrop from '../contexts/DragAndDrop';
@@ -31,6 +31,7 @@ export default ({
   onMove,
   onMoveLevel,
   onNewFolder,
+  onSync,
 }) => {
   const { layout, setLayout } = useContext(AccountSettings.Context);
 
@@ -48,6 +49,9 @@ export default ({
               <div className="Files-actions">
                 <LayoutSelect layout={layout} setLayout={setLayout} />
                 <NewFolder onCreate={onNewFolder} />
+                <Button onClick={onSync}>
+                  <span>Sync</span>
+                </Button>
               </div>
             </Row>
             {!files.length

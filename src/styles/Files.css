@@ -7,8 +7,12 @@
   background-color: #fff;
 }
 
+.Files-actions > * {
+  margin-left: 10px;
+}
+
 .Files-actions > :first-child {
-  margin-right: 10px;
+  margin-left: 0;
 }
 
 .Files-breadcrumbs {

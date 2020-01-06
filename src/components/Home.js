@@ -78,9 +78,9 @@ export default class Home extends Component {
   handleModal = modalOpen => () =>
     this.setState({ modalOpen });
 
-  handleFetch = id => () =>
+  handleFetch = id => (sync = false) =>
     this.setState({ loading: true }, () =>
-      api.get(`/api/${id}/files`)
+      api.get(`/api/${id}/files?sync=${sync}`)
         .then(this.handleFiles(id))
         .catch(() => this.setState({ loading: false }))
     );
@@ -157,6 +157,7 @@ export default class Home extends Component {
             onMoveLevel={this.handleMoveLevel}
             onNavigate={this.handleNavigate}
             onNewFolder={this.handleNewFolder}
+            onSync={() => this.handleFetch(this.state.account)(true)}
           />
           <AddAccount
             visible={modalOpen}
