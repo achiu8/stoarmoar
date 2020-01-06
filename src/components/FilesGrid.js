@@ -4,6 +4,7 @@ import { Col, Icon, Row } from 'antd';
 
 import DragAndDrop from '../contexts/DragAndDrop';
 import { chunksOf, filename, filesForAccount } from '../utils';
+import download from '../utils/download';
 
 const position = (cs, i, j) => cs * i + j;
 
@@ -11,7 +12,7 @@ export default ({ account, columns, files, onMove, onNavigate }) => (
   <>
     {chunksOf(columns, filesForAccount(account, files)).map((row, i) => (
       <Row key={i} className="grid-row" gutter={48}>
-        {row.map(({ name, type }, j) => (
+        {row.map(({ name, type, downloadUrl }, j) => (
           <Col key={j} span={24 / columns}>
             <DragAndDrop.Draggable i={position(columns, i, j)} render={draggableProps => (
               <DragAndDrop.Droppable
@@ -26,7 +27,11 @@ export default ({ account, columns, files, onMove, onNavigate }) => (
                     className={classNames('grid-item', {
                       'Droppable-hovered': dropping
                     })}
-                    onClick={() => onNavigate(type, name, position(columns, i, j))}
+                    onClick={() =>
+                      type === 'folder'
+                        ? onNavigate(type, name, position(columns, i, j))
+                        : download(downloadUrl)
+                    }
                   >
                     <Icon className="grid-item-icon" type={type} />
                     <span>{filename(name)}</span>

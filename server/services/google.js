@@ -5,7 +5,7 @@ const { authClient, isFolder } = require('../utils/google');
 
 const listFiles = (auth, parent) =>
   google.drive({ version: 'v3', auth }).files.list({
-    fields: 'nextPageToken, files(id, name, mimeType, description)',
+    fields: 'nextPageToken, files(id, name, mimeType, description, webContentLink)',
     q: `'${parent}' in parents`
   })
     .then(({ data }) => data.files)
