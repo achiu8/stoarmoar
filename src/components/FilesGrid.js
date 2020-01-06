@@ -4,11 +4,10 @@ import { Col, Icon, Row } from 'antd';
 
 import DragAndDrop from '../contexts/DragAndDrop';
 import { chunksOf, filename, filesForAccount } from '../utils';
-import download from '../utils/download';
 
 const position = (cs, i, j) => cs * i + j;
 
-export default ({ account, columns, files, onMove, onNavigate }) => (
+export default ({ account, columns, files, onDownload, onMove, onNavigate }) => (
   <>
     {chunksOf(columns, filesForAccount(account, files)).map((row, i) => (
       <Row key={i} className="grid-row" gutter={48}>
@@ -30,7 +29,7 @@ export default ({ account, columns, files, onMove, onNavigate }) => (
                     onClick={() =>
                       type === 'folder'
                         ? onNavigate(type, name, position(columns, i, j))
-                        : download(downloadUrl)
+                        : onDownload(downloadUrl)
                     }
                   >
                     <Icon className="grid-item-icon" type={type} />

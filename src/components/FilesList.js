@@ -1,8 +1,11 @@
 import React from 'react';
+import classNames from 'classnames';
 import { Icon, Table } from 'antd';
 
 import DragAndDrop from '../contexts/DragAndDrop';
 import { filesForAccount } from '../utils';
+
+import '../styles/FilesList.css';
 
 const columns = [
   {
@@ -31,7 +34,9 @@ const components = onMove => ({
               {...rest}
               {...draggableProps}
               {...droppableProps}
-              className={dropping ? 'Droppable-hovered' : ''}
+              className={classNames('FilesList-item', {
+                'Droppable-hovered': dropping,
+              }) }
             >
               {children}
             </tr>
@@ -42,14 +47,17 @@ const components = onMove => ({
   }
 });
 
-export default ({ account, files, onMove, onNavigate }) => (
+export default ({ account, files, onDownload, onMove, onNavigate }) => (
   <Table
     columns={columns}
     components={components(onMove)}
     dataSource={filesForAccount(account, files)}
-    onRow={({ name, type }, i) => ({
+    onRow={({ name, type, downloadUrl }, i) => ({
       i,
-      onClick: () => onNavigate(type, name, i),
+      onClick: () =>
+        type === 'folder'
+          ? onNavigate(type, name, i)
+          : onDownload(downloadUrl),
       type
     })}
     rowKey={({ id }) => id}

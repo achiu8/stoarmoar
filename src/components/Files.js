@@ -8,6 +8,7 @@ import FilesGrid from './FilesGrid';
 import FilesList from './FilesList';
 import LayoutSelect from './LayoutSelect';
 import NewFolder from './NewFolder';
+import download from '../utils/download';
 
 import '../styles/Files.css';
 
@@ -60,6 +61,7 @@ export default ({
                 ? <FilesList
                     account={account}
                     files={files}
+                    onDownload={download}
                     onNavigate={onNavigate}
                     onMove={onMove}
                   />
@@ -67,6 +69,7 @@ export default ({
                     account={account}
                     columns={columns}
                     files={files}
+                    onDownload={download}
                     onNavigate={onNavigate}
                     onMove={onMove}
                   />
