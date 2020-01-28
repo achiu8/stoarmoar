@@ -33,14 +33,16 @@ npm start
 
 #### For Linux ############
 
-#### Install PostgreSQL and node
+#### Install node, npm, and PostgreSQL
 ```
-sudo apt-get install node
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+npm
+
 sudo apt install postgresql postgresql-contrib
 ````
 #### Start the PostgreSQL server
 ```
-service postgres startls
+service postgres start
 
 sudo -u postgres createuser <username> -s
 sudo -u postgres createdb -O <username> <username>
