@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Icon, Table } from 'antd';
+import { Menu, Dropdown, Icon, Table } from 'antd';
 
 import DragAndDrop from '../contexts/DragAndDrop';
 import { filesForAccount } from '../utils';
@@ -20,31 +20,42 @@ const columns = [
   }
 ];
 
+const dropMenu = (
+  <Menu>
+    <Menu.Item key="1">Delete</Menu.Item>
+    <Menu.Item key="2">Host Preference</Menu.Item>
+  </Menu>
+);
+
 const components = onMove => ({
+
   body: {
     row: ({ children, i, type, ...rest }) => (
-      <DragAndDrop.Draggable i={i} render={draggableProps => (
-        <DragAndDrop.Droppable
-          droppable={type === 'folder'}
-          i={i}
-          onDrop={onMove}
-          type="file"
-          render={({ dropping, ...droppableProps }) => (
-            <tr
-              {...rest}
-              {...draggableProps}
-              {...droppableProps}
-              className={classNames('FilesList-item', {
-                'Droppable-hovered': dropping,
-              }) }
-            >
-              {children}
-            </tr>
-          )}
-        />
-      )} />
+      <Dropdown overlay={dropMenu} trigger={["contextMenu"]}>
+        <DragAndDrop.Draggable i={i} render={draggableProps => (
+          <DragAndDrop.Droppable
+            droppable={type === 'folder'}
+            i={i}
+            onDrop={onMove}
+            type="file"
+            render={({ dropping, ...droppableProps }) => (
+              <tr
+                {...rest}
+                {...draggableProps}
+                {...droppableProps}
+                className={classNames('FilesList-item', {
+                  'Droppable-hovered': dropping,
+                }) }
+              >
+                {children}
+              </tr>
+            )}
+          />
+        )} />
+      </Dropdown>
     )
   }
+
 });
 
 export default ({ account, files, onDownload, onMove, onNavigate }) => (
