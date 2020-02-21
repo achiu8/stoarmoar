@@ -31,34 +31,33 @@ const components = onMove => ({
 
   body: {
     row: ({ children, i, type, ...rest }) => (
-      <Dropdown overlay={dropMenu} trigger={["contextMenu"]}>
-        <DragAndDrop.Draggable i={i} render={draggableProps => (
-          <DragAndDrop.Droppable
-            droppable={type === 'folder'}
-            i={i}
-            onDrop={onMove}
-            type="file"
-            render={({ dropping, ...droppableProps }) => (
-              <tr
-                {...rest}
-                {...draggableProps}
-                {...droppableProps}
-                className={classNames('FilesList-item', {
-                  'Droppable-hovered': dropping,
-                }) }
-              >
-                {children}
-              </tr>
-            )}
-          />
-        )} />
-      </Dropdown>
+      <DragAndDrop.Draggable i={i} render={draggableProps => (
+        <DragAndDrop.Droppable
+          droppable={type === 'folder'}
+          i={i}
+          onDrop={onMove}
+          type="file"
+          render={({ dropping, ...droppableProps }) => (
+            <tr
+              {...rest}
+              {...draggableProps}
+              {...droppableProps}
+              className={classNames('FilesList-item', {
+                'Droppable-hovered': dropping,
+              }) }
+            >
+              {children}
+            </tr>
+          )}
+        />
+      )} />
+
     )
   }
 
 });
 
-export default ({ account, files, onDownload, onMove, onNavigate }) => (
+export default ({ account, files, onDownload, onMove, onNavigate, dropMenu }) => (
   <Table
     columns={columns}
     components={components(onMove)}
@@ -69,6 +68,10 @@ export default ({ account, files, onDownload, onMove, onNavigate }) => (
         type === 'folder'
           ? onNavigate(type, name, i)
           : onDownload(downloadUrl),
+      onContextMenu: () => (
+        <Dropdown overlay={dropMenu} trigger={["contextMenu"]}>
+        </Dropdown>
+      ),
       type
     })}
     rowKey={({ id }) => id}
