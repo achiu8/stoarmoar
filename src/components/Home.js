@@ -135,13 +135,14 @@ export default class Home extends Component {
   render() {
     const { layout, loggedIn, user } = this.props;
     const { account, columns, loading, modalOpen, files, path } = this.state;
+    const existingAccounts = accounts(user)
 
     return !loggedIn
       ? <Redirect to="/login" />
       : (
         <Layout>
           <Accounts
-            accounts={accounts(user)}
+            accounts={existingAccounts}
             onAddAccountClick={this.handleModal(true)}
             onFetch={this.handleFetch}
           />
@@ -160,6 +161,7 @@ export default class Home extends Component {
             onSync={() => this.handleFetch(this.state.account)(true)}
           />
           <AddAccount
+            accounts={existingAccounts}
             visible={modalOpen}
             onCancel={this.handleModal(false)}
           />
